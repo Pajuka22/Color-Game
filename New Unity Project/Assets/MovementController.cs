@@ -19,19 +19,24 @@ public class MovementController : MonoBehaviour {
     [SerializeField] private LayerMask WhatIsGround;
     private List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     float initGrav;//initial gravity has to be stored somewhere
-    int Jumps;//number of jumps the player currently has left.
+    public int Jumps;//number of jumps the player currently has left.
 	// Use this for initialization
 	void Start () {
-        for (int i = 0; i < jumpHeight.Count; i++)
-        {
-            jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
-            //using physics formula, except mass doesn't matter because we're talking about velocity.
-        }
+        jumpSpeed.Clear();
+        jumpSpeed.TrimExcess();
+        setJumpSpeed(0, jumpHeight.Count);
         //fill in jumpspeed list with all the values needed.
         initGrav = RB.gravityScale;
-        Jumps = jumpSpeed.Count - 1;
+        Jumps = jumpSpeed.Count;
         //just storing initial values
 	}
+    public void setJumpSpeed(int first, int last)
+    {
+        for(int i = first; i < last; i++)
+        {
+            jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+        }
+    }
     private void Awake()
     {
         Ground = transform.Find("Ground");
@@ -99,7 +104,7 @@ public class MovementController : MonoBehaviour {
         //set horizontal velocity to speed.
         if (jump && Jumps > 0)
         {
-            RB.velocity = new Vector2(RB.velocity.x, jumpSpeed[jumpHeight.Count - Jumps]);
+            RB.velocity = new Vector2(RB.velocity.x, jumpSpeed[jumpSpeed.Count - Jumps]);
             Jumps--;
             //if the player tried to jump and you can jump (Jumps counts jumps left) set the velocity to the jumpsSpeed's value at the jump the player's currently on and lose a jump.
         }
