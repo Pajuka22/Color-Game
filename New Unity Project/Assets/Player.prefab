@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4157686041658388}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 20646161095912984}
   - component: {fileID: 124939987865406088}
   - component: {fileID: 81199805584311174}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4026536731287814}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 50382783054794746}
   - component: {fileID: 114020754568422712}
   - component: {fileID: 114115393014132784}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,6 +293,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967263
   Jumps: 0
+  invincibilityTime: 1
+  lives: 3
 --- !u!124 &124939987865406088
 Behaviour:
   m_ObjectHideFlags: 1

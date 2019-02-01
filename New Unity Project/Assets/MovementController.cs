@@ -20,6 +20,9 @@ public class MovementController : MonoBehaviour {
     private List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     float initGrav;//initial gravity has to be stored somewhere
     public int Jumps;//number of jumps the player currently has left.
+    public float invincibilityTime = 1;
+    public int lives = 3;
+    float invincibility = 0;
 	// Use this for initialization
 	void Start () {
         jumpSpeed.Clear();
@@ -29,6 +32,7 @@ public class MovementController : MonoBehaviour {
         initGrav = RB.gravityScale;
         Jumps = jumpSpeed.Count;
         //just storing initial values
+
 	}
     public void setJumpSpeed(int first, int last)
     {
@@ -60,6 +64,10 @@ public class MovementController : MonoBehaviour {
                 bGrounded = true;
                 Jumps = jumpSpeed.Count;
             }
+        }
+        if (invincibility > 0)
+        {
+            invincibility -= Time.fixedDeltaTime;
         }
         //if grounded, get all jumps back
     }
@@ -109,4 +117,19 @@ public class MovementController : MonoBehaviour {
             //if the player tried to jump and you can jump (Jumps counts jumps left) set the velocity to the jumpsSpeed's value at the jump the player's currently on and lose a jump.
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if ((collision.gameObject.layer == LayerMask.NameToLayer("Obstacles") ||
+           collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+           && invincibility <= 0)
+        {
+            invincibility = invincibilityTime;
+            lives--;
+        }
+    }
 }
+
