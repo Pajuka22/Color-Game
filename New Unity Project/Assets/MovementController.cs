@@ -26,22 +26,29 @@ public class MovementController : MonoBehaviour {
     private List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     [SerializeField] private LayerMask WhatHurts;
     float initGrav;//initial gravity has to be stored somewhere
-    public float invincibilityTime = 1;
+    public bool hashealth = false;
+    public bool haslives = false;
+    public int health = 1;
     public int lives = 3;
+    public float invincibilityTime = 1;
     float invincibility = 0;
     bool inWater = false;
+    int currentHealth;
+    int currentLives;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         jumpSpeed.Clear();
         jumpSpeed.TrimExcess();
         setJumpSpeed(0, jumpHeight.Count);
         //fill in jumpspeed list with all the values needed.
         initGrav = RB.gravityScale;
         Jumps = jumpSpeed.Count;
+        currentHealth = health;
+        currentLives = lives;
         //just storing initial values
 
-	}
+    }
     public void setJumpSpeed(int first, int last)
     {
         for(int i = first; i < last; i++)
@@ -145,9 +152,25 @@ public class MovementController : MonoBehaviour {
         if ((WhatHurts.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer
            && invincibility <= 0)
         {
-            invincibility = invincibilityTime;
-            lives--;
+            if (hashealth)
+            {
+                currentHealth--;
+            }
+            if(health <= 0 || !hashealth)
+            {
+                invincibility = invincibilityTime;
+                currentLives--;
+                currentHealth = health;
+            }
+            if(currentLives == 0)
+            {
+                die();
+            }
         }
+    }
+    private void die()
+    {
+        //input dying code here.
     }
 }
 
