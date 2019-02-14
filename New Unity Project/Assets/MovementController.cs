@@ -150,7 +150,8 @@ public class MovementController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D col)
     {
         if ((WhatHurts.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer
-           && invincibility <= 0)
+           && invincibility <= 0 && 
+           (col.gameObject.GetComponent<MechanicParent>() ? col.gameObject.GetComponent<MechanicParent>().WOKE : false))
         {
             if (hashealth)
             {
