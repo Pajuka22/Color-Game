@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeMechanic : MechanicHurts
+public class MechanicHurts : MechanicParent
 {
+    public int Damage = 1;
     // Start is called before the first frame update
     void Start()
-    { 
-
+    {
+        
     }
 
     // Update is called once per frame

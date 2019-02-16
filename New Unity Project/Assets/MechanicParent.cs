@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MechanicParent : MonoBehaviour
 {
-    public bool WOKE = false;
+    public bool WOKE = false;// { get; set; }
     // Start is called before the first frame update
     void Start()
     {

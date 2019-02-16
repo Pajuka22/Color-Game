@@ -33,7 +33,7 @@ public class MovementController : MonoBehaviour {
     public float invincibilityTime = 1;
     float invincibility = 0;
     bool inWater = false;
-    int currentHealth;
+    public int currentHealth;
     int currentLives;
 
     // Use this for initialization
@@ -149,13 +149,11 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if ((WhatHurts.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer
-           && invincibility <= 0 && 
-           (col.gameObject.GetComponent<MechanicParent>() ? col.gameObject.GetComponent<MechanicParent>().WOKE : false))
+        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false)
         {
             if (hashealth)
             {
-                currentHealth--;
+                currentHealth -= 1;//col.gameObject.GetComponent<MechanicHurts>().Damage;
             }
             if(health <= 0 || !hashealth)
             {
@@ -172,6 +170,10 @@ public class MovementController : MonoBehaviour {
     private void die()
     {
         //input dying code here.
+    }
+    public bool Has<T>(GameObject GO)
+    {
+        return GO.GetComponent<T>() != null;
     }
 }
 
