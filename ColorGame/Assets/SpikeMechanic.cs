@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpikeMechanic : MechanicHurts
 {
+    public Collider2D Damager;
     // Start is called before the first frame update
     void Start()
     { 

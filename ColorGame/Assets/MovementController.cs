@@ -149,21 +149,25 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false)
+        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
+            && invincibility <= 0)
         {
-            if (hashealth)
-            {
-                currentHealth -= 1;//col.gameObject.GetComponent<MechanicHurts>().Damage;
-            }
-            if(health <= 0 || !hashealth)
+            if ((Has<SpikeMechanic>(col.gameObject) ? col.collider == col.gameObject.GetComponent<SpikeMechanic>().Damager : true))
             {
                 invincibility = invincibilityTime;
-                currentLives--;
-                currentHealth = health;
-            }
-            if(currentLives == 0)
-            {
-                die();
+                if (hashealth)
+                {
+                    currentHealth -= col.gameObject.GetComponent<MechanicHurts>().Damage;
+                }
+                if (health <= 0 || !hashealth)
+                {
+                    currentLives--;
+                    currentHealth = health;
+                }
+                if (currentLives == 0)
+                {
+                    die();
+                }
             }
         }
     }
