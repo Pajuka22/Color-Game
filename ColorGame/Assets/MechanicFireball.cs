@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicParent : MonoBehaviour
+public class MechanicFireball : MechanicParent
 {
-    public bool WOKE = false;// { get; set; }
     // Start is called before the first frame update
+    
     void Start()
     {
         
@@ -15,9 +15,5 @@ public class MechanicParent : MonoBehaviour
     void Update()
     {
         
-    }
-    public virtual void Activate()
-    {
-        WOKE = true;
     }
 }

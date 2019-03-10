@@ -24,7 +24,8 @@ public class Colors : MonoBehaviour
     {
         if (WhatColor <= Collected.Current)
         {
-            Mechanic.WOKE = true;
+            Mechanic.Activate();
+            enabled = false;
         }
     }
 }

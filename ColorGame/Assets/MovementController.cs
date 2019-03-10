@@ -23,7 +23,7 @@ public class MovementController : MonoBehaviour {
     private Transform Ceiling;//Ground and ceiling checks
     private bool bGrounded;//grounded?
     private float GroundRadius = 0.2f;//radius for which it will become grounded
-    private List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
+    public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     [SerializeField] private LayerMask WhatHurts;
     float initGrav;//initial gravity has to be stored somewhere
     public bool hashealth = false;
@@ -53,7 +53,10 @@ public class MovementController : MonoBehaviour {
     {
         for(int i = first; i < last; i++)
         {
-            jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+            if (jumpSpeed.Count < i + 1)
+            {
+                jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+            }
         }
     }
     private void Awake()
