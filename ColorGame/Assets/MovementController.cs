@@ -23,7 +23,7 @@ public class MovementController : MonoBehaviour {
     private Transform Ceiling;//Ground and ceiling checks
     private bool bGrounded;//grounded?
     private float GroundRadius = 0.2f;//radius for which it will become grounded
-    private List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
+    public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     [SerializeField] private LayerMask WhatHurts;
     float initGrav;//initial gravity has to be stored somewhere
     public bool hashealth = false;
@@ -33,7 +33,7 @@ public class MovementController : MonoBehaviour {
     public float invincibilityTime = 1;
     float invincibility = 0;
     bool inWater = false;
-    int currentHealth;
+    public int currentHealth;
     int currentLives;
 
     // Use this for initialization
@@ -53,7 +53,10 @@ public class MovementController : MonoBehaviour {
     {
         for(int i = first; i < last; i++)
         {
-            jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+            if (jumpSpeed.Count < i + 1)
+            {
+                jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+            }
         }
     }
     private void Awake()
@@ -149,28 +152,35 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if ((WhatHurts.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer
-           && invincibility <= 0)
+        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
+            && invincibility <= 0)
         {
-            if (hashealth)
-            {
-                currentHealth--;
-            }
-            if(health <= 0 || !hashealth)
+            if ((Has<SpikeMechanic>(col.gameObject) ? col.collider == col.gameObject.GetComponent<SpikeMechanic>().Damager : true))
             {
                 invincibility = invincibilityTime;
-                currentLives--;
-                currentHealth = health;
-            }
-            if(currentLives == 0)
-            {
-                die();
+                if (hashealth)
+                {
+                    currentHealth -= col.gameObject.GetComponent<MechanicHurts>().Damage;
+                }
+                if (health <= 0 || !hashealth)
+                {
+                    currentLives--;
+                    currentHealth = health;
+                }
+                if (currentLives == 0)
+                {
+                    die();
+                }
             }
         }
     }
     private void die()
     {
         //input dying code here.
+    }
+    public bool Has<T>(GameObject GO)
+    {
+        return GO.GetComponent<T>() != null;
     }
 }
 
