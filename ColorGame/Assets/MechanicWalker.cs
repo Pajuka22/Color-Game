@@ -5,12 +5,15 @@ using UnityEngine;
 public class MechanicWalker : MechanicEnemy
 {
     public enum States { NotWorking, Walking, Running, Transforming, Attacking}
+    public GameObject player;
     public States currentState = States.NotWorking;
     public Rigidbody2D RB;
     public LayerMask enemyMask;
     float width;
     Transform myTransform;
     bool grounded;
+    public float chaseRad = 100;
+    public float distance;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,41 +28,84 @@ public class MechanicWalker : MechanicEnemy
         Vector2 linecastPos = (myTransform.position - myTransform.right * width);
         Debug.DrawLine(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down);
         grounded = Physics2D.Linecast(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down, enemyMask);
-        if (currentState.Equals(States.Walking))
+        switch (currentState)
         {
-            if (!grounded)
-            {
-                Vector3 currRot = myTransform.eulerAngles;
-                currRot.y += 180;
-                this.transform.eulerAngles = currRot;
-                if (RB.velocity.x > 0)
+            case States.Walking:
                 {
-                    RB.velocity = new Vector2(-8, RB.velocity.y);
+                    if ((player.transform.position - this.transform.position).magnitude < chaseRad)
+                    {
+                        currentState = States.Transforming;
+                    }
+                    if (!grounded)
+                    {
+                        Vector3 currRot = myTransform.eulerAngles;
+                        currRot.y += 180;
+                        this.transform.eulerAngles = currRot;
+                        if (RB.velocity.x > 0)
+                        {
+                            RB.velocity = new Vector2(-8, RB.velocity.y);
+                        }
+                        else
+                        {
+                            RB.velocity = new Vector2(8, RB.velocity.y);
+                        }
+                    }
+                    else
+                    {
+                        if (RB.velocity.x < 0)
+                        {
+                            RB.velocity = new Vector2(-8, RB.velocity.y);
+                        }
+                        else
+                        {
+                            RB.velocity = new Vector2(8, RB.velocity.y);
+                        }
+                    }
                 }
-                else
+                break;
+            case States.Transforming:
                 {
-                    RB.velocity = new Vector2(8, RB.velocity.y);
+                    StartCoroutine(Transform(1));
                 }
-            }
-            else
-            {
-                if (RB.velocity.x < 0)
+                break;
+            case States.Running:
                 {
-                    RB.velocity = new Vector2(-8, RB.velocity.y);
+                    RB.velocity = new Vector2 (10 * sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
+                    if ((player.transform.position - this.transform.position).magnitude > chaseRad)
+                    {
+                        currentState = States.Walking;
+                    }
                 }
-                else
+                break;
+            default:
                 {
-                    RB.velocity = new Vector2(8, RB.velocity.y);
+                    currentState = States.NotWorking;
                 }
-            }
+                break;
         }
     }
     public override void ActAwake()
     {
-
+        
     }
-    public void GoApeShit()
+    public int sign(float val)
     {
-
+        if(val == 0)
+        {
+            return 0;
+        }else if(val < 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    IEnumerator Transform(float time)
+    {
+        RB.velocity = new Vector2(0f, 0f);
+        yield return new WaitForSeconds(time);
+        currentState = States.Running;
     }
 }

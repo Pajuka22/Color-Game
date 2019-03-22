@@ -155,7 +155,7 @@ public class MovementController : MonoBehaviour {
         if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
             && invincibility <= 0)
         {
-            if ((Has<SpikeMechanic>(col.gameObject) ? col.collider == col.gameObject.GetComponent<SpikeMechanic>().Damager : true))
+            if ((Has<MechanicHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MechanicHurts>().Damager : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
