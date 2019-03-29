@@ -173,6 +173,10 @@ public class MovementController : MonoBehaviour {
                 }
             }
         }
+        if (Has<MechanicEnemy>(col.gameObject))
+        {
+            Physics2D.IgnoreCollision(col.collider, col.otherCollider);
+        }
     }
     private void die()
     {

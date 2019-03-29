@@ -143,7 +143,7 @@ Transform:
   - {fileID: 1825510266}
   - {fileID: 1241049392}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &185697509 stripped
 GameObject:
@@ -282,7 +282,7 @@ Transform:
   m_LocalScale: {x: 0.138278, y: 0.138278, z: 0.138278}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &288315304
 GameObject:
@@ -407,7 +407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 57977547c59abb546bbb1501e3c417db, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 57977547c59abb546bbb1501e3c417db, type: 3}
       propertyPath: m_LocalScale.x
@@ -448,7 +448,7 @@ Transform:
   - {fileID: 288315305}
   - {fileID: 1069359307}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469956787
 GameObject:
@@ -568,7 +568,7 @@ Transform:
   m_LocalScale: {x: 0.14116868, y: 0.14116868, z: 0.14116868}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &517660445
 PrefabInstance:
@@ -839,7 +839,7 @@ Transform:
   m_LocalScale: {x: 0.170684, y: 0.17068401, z: 0.17068401}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &639279580
 BoxCollider2D:
@@ -930,11 +930,11 @@ GameObject:
   - component: {fileID: 640977603}
   - component: {fileID: 640977602}
   - component: {fileID: 640977600}
-  - component: {fileID: 640977604}
   - component: {fileID: 640977601}
   - component: {fileID: 640977605}
+  - component: {fileID: 640977604}
   m_Layer: 10
-  m_Name: Front Sprite - Green
+  m_Name: Walker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WOKE: 0
   Damage: 101
-  Damager: {fileID: 640977604}
+  Damager: {fileID: 0}
   player: {fileID: 185697509}
   currentState: 0
   RB: {fileID: 640977600}
@@ -1021,7 +1021,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 932a32b0b2da6a54b9f92167f3a3a31c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ffe9e55c3150eb4a85f3c5f727e4985, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1040,12 +1040,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640977599}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.375624, y: 0.09000003, z: 0}
+  m_LocalPosition: {x: 0.44, y: 5.31, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 865512610}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &640977604
 BoxCollider2D:
@@ -1064,14 +1064,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.71, y: 31.55}
+    oldSize: {x: 6.18, y: 12.68}
     newSize: {x: 19.71, y: 31.55}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.71, y: 31.55}
+  m_Size: {x: 6.18, y: 12.68}
   m_EdgeRadius: 0
 --- !u!114 &640977605
 MonoBehaviour:
@@ -1504,7 +1504,7 @@ Transform:
   m_LocalScale: {x: 3.8281398, y: 6.3406153, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1706541762
 BoxCollider2D:
@@ -1569,7 +1569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 674c23718320e9d498cdad2a5bcd576a, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 674c23718320e9d498cdad2a5bcd576a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1782,5 +1782,5 @@ Transform:
   m_LocalScale: {x: 0.08762, y: 0.08762, z: 0.08762}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

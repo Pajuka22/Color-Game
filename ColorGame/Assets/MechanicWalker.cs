@@ -108,4 +108,9 @@ public class MechanicWalker : MechanicEnemy
         yield return new WaitForSeconds(time);
         currentState = States.Running;
     }
+    public override void Activate()
+    {
+        base.Activate();
+        currentState = States.Walking;
+    }
 }
