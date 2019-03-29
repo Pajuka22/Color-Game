@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     bool jump = false;
     bool crouch = false;
-    float speed = 0;
+    public float speed = 0;
     public MovementController controller;
 	// Use this for initialization
 	void Start () {
