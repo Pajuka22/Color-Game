@@ -13,14 +13,18 @@ public class MechanicWalker : MechanicEnemy
     float height;
     Transform myTransform;
     bool grounded;
-    public float chaseRad = 100;
-    public float distance;
+    public float jumpHeight = 30;
+    float jumpSpeed;
     public float speed = 5;
+    public float chaseSpeed;
+    public float chaseRad = 100;
+    bool canJump = false;
     // Start is called before the first frame update
     void Start()
     {
         width = this.GetComponent<SpriteRenderer>().bounds.extents.x;
         height = this.GetComponent<SpriteRenderer>().bounds.extents.y;
+        jumpSpeed = Mathf.Sqrt(2 * RB.gravityScale * jumpHeight);
     }
 
     // Update is called once per frame
@@ -28,21 +32,24 @@ public class MechanicWalker : MechanicEnemy
     {
         myTransform = this.transform;
         Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
-        //Debug.DrawLine(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down);
+        grounded = Physics2D.Linecast(linecastPos, linecastPos + Vector2.down, WhatIsGround);
+        Debug.DrawLine(linecastPos, linecastPos + Vector2.down);
         switch (currentState)
         {
             case States.Walking:
                 {
-                    Debug.DrawLine(linecastPos, linecastPos + Vector2.down);
-                    grounded = Physics2D.Linecast(linecastPos, linecastPos + Vector2.down, WhatIsGround);
                     if (grounded)
                     {
-                        RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, 0) : new Vector2(-speed, 0);
+                        RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, RB.velocity.y) : new Vector2(-speed, RB.velocity.y);
                     }
                     else
                     {
                         RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
                         transform.Rotate(new Vector3(0, 180, 0));
+                    }
+                    if((this.transform.position - player.transform.position).magnitude < chaseRad)
+                    {
+                        currentState = States.Transforming;
                     }
                 }
                 break;
@@ -53,7 +60,19 @@ public class MechanicWalker : MechanicEnemy
                 break;
             case States.Running:
                 {
-                    RB.velocity = new Vector2 (10 * sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
+                    RB.velocity = new Vector2(chaseSpeed * sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
+                    if (grounded)
+                    {
+                        canJump = true;
+                    }
+                    else
+                    {
+                        if (canJump)
+                        {
+                            RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
+                            canJump = false;
+                        }
+                    }
                     if ((player.transform.position - this.transform.position).magnitude > chaseRad)
                     {
                         currentState = States.Walking;
