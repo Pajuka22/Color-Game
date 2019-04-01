@@ -8,58 +8,41 @@ public class MechanicWalker : MechanicEnemy
     public GameObject player;
     public States currentState = States.NotWorking;
     public Rigidbody2D RB;
-    public LayerMask enemyMask;
+    public LayerMask WhatIsGround;
     float width;
+    float height;
     Transform myTransform;
     bool grounded;
     public float chaseRad = 100;
     public float distance;
+    public float speed = 5;
     // Start is called before the first frame update
     void Start()
     {
         width = this.GetComponent<SpriteRenderer>().bounds.extents.x;
-        
+        height = this.GetComponent<SpriteRenderer>().bounds.extents.y;
     }
 
     // Update is called once per frame
     void Update()
     {
         myTransform = this.transform;
-        Vector2 linecastPos = (myTransform.position - myTransform.right * width);
-        Debug.DrawLine(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down);
-        grounded = Physics2D.Linecast(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down, enemyMask);
+        Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
+        //Debug.DrawLine(linecastPos + Vector2.down, linecastPos + Vector2.down + Vector2.down);
         switch (currentState)
         {
             case States.Walking:
                 {
-                    if ((player.transform.position - this.transform.position).magnitude < chaseRad)
+                    Debug.DrawLine(linecastPos, linecastPos + Vector2.down);
+                    grounded = Physics2D.Linecast(linecastPos, linecastPos + Vector2.down, WhatIsGround);
+                    if (grounded)
                     {
-                        currentState = States.Transforming;
-                    }
-                    if (!grounded)
-                    {
-                        Vector3 currRot = myTransform.eulerAngles;
-                        currRot.y += 180;
-                        this.transform.eulerAngles = currRot;
-                        if (RB.velocity.x > 0)
-                        {
-                            RB.velocity = new Vector2(-8, RB.velocity.y);
-                        }
-                        else
-                        {
-                            RB.velocity = new Vector2(8, RB.velocity.y);
-                        }
+                        RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, 0) : new Vector2(-speed, 0);
                     }
                     else
                     {
-                        if (RB.velocity.x < 0)
-                        {
-                            RB.velocity = new Vector2(-8, RB.velocity.y);
-                        }
-                        else
-                        {
-                            RB.velocity = new Vector2(8, RB.velocity.y);
-                        }
+                        RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
+                        transform.Rotate(new Vector3(0, 180, 0));
                     }
                 }
                 break;
