@@ -176,12 +176,14 @@ public class MechanicWalker : MechanicEnemy
         
         for (int i = 0; i < vertices; i++)
         {
+            Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position + new Vector3(chaseRad * Mathf.Cos(i * deltaTheta), chaseRad * Mathf.Sin(i * deltaTheta), 0f),
                 transform.position + new Vector3(chaseRad * Mathf.Cos((i + 1) * deltaTheta), chaseRad * Mathf.Sin((i + 1) * deltaTheta), 0f));
+            Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position + new Vector3(YEETrad * Mathf.Cos(i * deltaTheta), YEETrad * Mathf.Sin(i * deltaTheta), 0f),
                 transform.position + new Vector3(YEETrad * Mathf.Cos((i + 1) * deltaTheta), YEETrad * Mathf.Sin((i + 1) * deltaTheta), 0f));
         }
-        linerenderer.material.color = Color.white;
+        Gizmos.color = Color.white;
     }
 #endif
 }
