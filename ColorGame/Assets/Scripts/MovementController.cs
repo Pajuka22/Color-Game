@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour {
     public int health = 1;
     public int lives = 3;
     public float invincibilityTime = 1;
-    float invincibility = 0;
+    public float invincibility = 0;
     bool inWater = false;
     public int currentHealth;
     int currentLives;
@@ -136,26 +136,16 @@ public class MovementController : MonoBehaviour {
         }
         RB.drag = inWater ? waterFriction : airFriction;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if((WhatIsWater.value & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        if((WhatIsWater.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer)
         {
             inWater = true;
         }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if ((WhatIsWater.value & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
-        {
-            inWater = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D col)
-    {
         if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
-            && invincibility <= 0)
+        && invincibility <= 0)
         {
-            if ((Has<MechanicHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MechanicHurts>().Damager : true))
+            if ((Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().Damagers.Contains(col) : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
@@ -173,14 +163,45 @@ public class MovementController : MonoBehaviour {
                 }
             }
         }
+    }
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if ((WhatIsWater.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer)
+        {
+            inWater = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
         if (Has<MechanicEnemy>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
-        if (Has<MechanicEnemy>(col.gameObject))
+        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
+            && invincibility <= 0)
         {
-            Physics2D.IgnoreCollision(col.collider, col.otherCollider);
+            if ((Has<MechanicHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MechanicHurts>().Damagers.Contains(col.collider) : true))
+            {
+                invincibility = invincibilityTime;
+                if (hashealth)
+                {
+                    //currentHealth -= col.gameObject.GetComponent<MechanicHurts>().Damage;
+                }
+                if (health <= 0 || !hashealth)
+                {
+                    currentLives--;
+                    currentHealth = health;
+                }
+                if (currentLives == 0)
+                {
+                    die();
+                }
+            }
         }
+    }
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        //Physics2D.IgnoreCollision(col.collider, col.otherCollider, false);
     }
     private void die()
     {

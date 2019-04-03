@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(Animator))]
 public class MechanicWalker : MechanicEnemy
 {
     public enum States { NotWorking, Walking, Running, Transforming, Attacking}
@@ -25,6 +26,8 @@ public class MechanicWalker : MechanicEnemy
     bool yeeted = false;
     float deltaTheta;
     private LineRenderer linerenderer;
+    private Animator Anim;
+    bool touchGround = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,7 @@ public class MechanicWalker : MechanicEnemy
         jumpSpeed = Mathf.Sqrt(2 * RB.gravityScale * jumpHeight);
         linerenderer = GetComponent<LineRenderer>();
         deltaTheta = (2f * Mathf.PI) / vertices;
+        Anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,17 +44,17 @@ public class MechanicWalker : MechanicEnemy
     {
         myTransform = this.transform;
         Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
-        grounded = Physics2D.Linecast(linecastPos, linecastPos + Vector2.down, WhatIsGround);
+        grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
         
-        Debug.DrawLine(linecastPos, linecastPos + Vector2.down);
+        Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
         for (int i = 0; i < vertices; i++)
         {
-            Debug.DrawLine(transform.position + new Vector3(chaseRad * Mathf.Cos(i * deltaTheta), chaseRad * Mathf.Sin(i * deltaTheta), 0f),
-                transform.position + new Vector3(chaseRad * Mathf.Cos((i + 1) * deltaTheta), chaseRad * Mathf.Sin((i + 1) * deltaTheta), 0f),
-                Color.yellow);
-            Debug.DrawLine(transform.position + new Vector3(YEETrad * Mathf.Cos(i * deltaTheta), YEETrad * Mathf.Sin(i * deltaTheta), 0f),
-                transform.position + new Vector3(YEETrad * Mathf.Cos((i + 1) * deltaTheta), YEETrad * Mathf.Sin((i + 1) * deltaTheta), 0f),
-                Color.red);
+            //Debug.DrawLine(transform.position + new Vector3(chaseRad * Mathf.Cos(i * deltaTheta), chaseRad * Mathf.Sin(i * deltaTheta), 0f),
+              //  transform.position + new Vector3(chaseRad * Mathf.Cos((i + 1) * deltaTheta), chaseRad * Mathf.Sin((i + 1) * deltaTheta), 0f),
+                //Color.yellow);
+            //Debug.DrawLine(transform.position + new Vector3(YEETrad * Mathf.Cos(i * deltaTheta), YEETrad * Mathf.Sin(i * deltaTheta), 0f),
+              //  transform.position + new Vector3(YEETrad * Mathf.Cos((i + 1) * deltaTheta), YEETrad * Mathf.Sin((i + 1) * deltaTheta), 0f),
+                //Color.red);
         }
         switch (currentState)
         {
@@ -103,9 +107,7 @@ public class MechanicWalker : MechanicEnemy
                 break;
             case States.Attacking:
                 {
-                    
-                    //StartCoroutine(WaitForGround());\
-                    if (grounded)
+                    if (checkGround() || grounded)
                     {
                         if (yeeted)
                         {
@@ -145,29 +147,28 @@ public class MechanicWalker : MechanicEnemy
             return 1;
         }
     }
+    public bool checkGround()
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(2 * width, 2 * height) * 1.1f, 0f, WhatIsGround);
+        for(int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i] != gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     IEnumerator Transform(float time)
     {
         RB.velocity = new Vector2(0f, 0f);
         yield return new WaitForSeconds(time);
         currentState = States.Running;
     }
-    /*
-    IEnumerator WaitForGround()
-    {
-        yield return new WaitUntil(() => grounded);
-    }
-     */
     public override void Activate()
     {
         base.Activate();
         currentState = States.Walking;
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject == player)
-        {
-            Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
-        }
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
