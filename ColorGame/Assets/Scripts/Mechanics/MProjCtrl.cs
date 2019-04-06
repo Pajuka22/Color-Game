@@ -25,7 +25,7 @@ public class MechanicProjectileController : MechanicParent
         }
         
         //determines if the projectile can be created; if so, one is created
-        if (Input.GetButtonDown("Projectile") && createprojectile)
+        if (Input.GetButtonDown("Fire1") && createprojectile)
         {
             createprojectile = false; //prevents projectile spam
             GameObject newProjectile = Instantiate(Projectile) as GameObject;

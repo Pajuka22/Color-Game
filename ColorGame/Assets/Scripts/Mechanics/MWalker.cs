@@ -47,14 +47,9 @@ public class MechanicWalker : MechanicEnemy
         grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
         
         Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
-        for (int i = 0; i < vertices; i++)
+        if(myTransform.right != new Vector3(sign(RB.velocity.x), 0f , 0f))
         {
-            //Debug.DrawLine(transform.position + new Vector3(chaseRad * Mathf.Cos(i * deltaTheta), chaseRad * Mathf.Sin(i * deltaTheta), 0f),
-              //  transform.position + new Vector3(chaseRad * Mathf.Cos((i + 1) * deltaTheta), chaseRad * Mathf.Sin((i + 1) * deltaTheta), 0f),
-                //Color.yellow);
-            //Debug.DrawLine(transform.position + new Vector3(YEETrad * Mathf.Cos(i * deltaTheta), YEETrad * Mathf.Sin(i * deltaTheta), 0f),
-              //  transform.position + new Vector3(YEETrad * Mathf.Cos((i + 1) * deltaTheta), YEETrad * Mathf.Sin((i + 1) * deltaTheta), 0f),
-                //Color.red);
+            transform.Rotate(new Vector3(0, 180, 0));
         }
         switch (currentState)
         {
