@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeMechanic : MechanicHurts
+public class MSpike : MHurts
 {
 
     // Start is called before the first frame update

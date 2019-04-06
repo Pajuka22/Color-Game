@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicProjectileController : MechanicParent
+public class MProjCtrl : MParent
 {
     public float direction = 1; //used to store player direction even when no movement is occuring
     private bool createprojectile = true;
@@ -30,7 +30,7 @@ public class MechanicProjectileController : MechanicParent
             createprojectile = false; //prevents projectile spam
             GameObject newProjectile = Instantiate(Projectile) as GameObject;
             newProjectile.transform.position = new Vector2(transform.position.x, transform.position.y);
-            newProjectile.GetComponent<MechanicProjectile>().direction = direction; //tells the projectile the direction to go in
+            newProjectile.GetComponent<MProjectile>().direction = direction; //tells the projectile the direction to go in
             Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
         }
     }

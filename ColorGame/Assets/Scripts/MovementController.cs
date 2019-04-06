@@ -142,15 +142,15 @@ public class MovementController : MonoBehaviour {
         {
             inWater = true;
         }
-        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
+        if (Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
         && invincibility <= 0)
         {
-            if ((Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().Damagers.Contains(col) : true))
+            if ((Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().Damagers.Contains(col) : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
                 {
-                    currentHealth -= col.gameObject.GetComponent<MechanicHurts>().Damage;
+                    currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
                 }
                 if (health <= 0 || !hashealth)
                 {
@@ -173,19 +173,19 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (Has<MechanicEnemy>(col.gameObject))
+        if (Has<MEnemy>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
-        if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
+        if (Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
             && invincibility <= 0)
         {
-            if ((Has<MechanicHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MechanicHurts>().Damagers.Contains(col.collider) : true))
+            if ((Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
                 {
-                    //currentHealth -= col.gameObject.GetComponent<MechanicHurts>().Damage;
+                    //currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
                 }
                 if (health <= 0 || !hashealth)
                 {

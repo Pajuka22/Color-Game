@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicProjectile : MonoBehaviour
+public class MProjectile : MonoBehaviour
 {
     public float direction; //stored direction from the controller
     public float bulletspeed = 1;

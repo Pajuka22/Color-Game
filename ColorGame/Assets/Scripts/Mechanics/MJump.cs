@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicJump : MechanicParent
+public class MJump : MParent
 {
     // Start is called before the first frame update
     public MovementController PlayerMovement;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(Animator))]
-public class MechanicWalker : MechanicEnemy
+public class MWalker : MEnemy
 {
     public enum States { NotWorking, Walking, Running, Transforming, Attacking}
     public GameObject player;
@@ -47,7 +47,7 @@ public class MechanicWalker : MechanicEnemy
         grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
         
         Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
-        if(myTransform.right != new Vector3(sign(RB.velocity.x), 0f , 0f))
+        if(myTransform.right != new Vector3(sign(RB.velocity.x), 0f , 0f) && RB.velocity.magnitude != 0)
         {
             transform.Rotate(new Vector3(0, 180, 0));
         }

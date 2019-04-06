@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicEnemy : MechanicHurts
+public class MEnemy : MHurts
 {
     
     // Start is called before the first frame update

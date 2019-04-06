@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MechanicParent : MonoBehaviour
+public class MParent: MonoBehaviour
 {
     public bool WOKE = false;// { get; set; }
     // Start is called before the first frame update

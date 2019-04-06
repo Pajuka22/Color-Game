@@ -6,7 +6,7 @@ public class Colors : MonoBehaviour
 {
     public enum ColorEnum {White, Black, Red, Orange, Yellow, Green, Blue, Purple, Grey};
     public ColorEnum WhatColor;
-    public MechanicParent Mechanic;
+    public MParent Mechanic;
     ColorStorage Collected;
     // Start is called before the first frame update
     void Start()
