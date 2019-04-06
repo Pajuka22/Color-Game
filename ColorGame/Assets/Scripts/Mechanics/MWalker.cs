@@ -128,7 +128,7 @@ public class MWalker : MEnemy
     {
         
     }
-    public int sign(float val)
+    public static int sign(float val)
     {
         if(val == 0)
         {

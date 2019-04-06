@@ -35,6 +35,7 @@ public class MovementController : MonoBehaviour {
     bool inWater = false;
     public int currentHealth;
     int currentLives;
+    GameObject Obj;
 
     // Use this for initialization
     void Start () {
@@ -63,11 +64,19 @@ public class MovementController : MonoBehaviour {
     {
         Ground = transform.Find("Ground");
         Ceiling = transform.Find("Ceiling");
+        Obj = GameObject.Find("/Player/sprite");
         //find these
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if(MWalker.sign(RB.velocity.x) != MWalker.sign(Obj.transform.right.x))
+        {
+            if(RB.velocity.x != 0)
+            {
+                Obj.transform.Rotate(0, 180, 0);
+            }
+        }
         bGrounded = false;
         if(Jumps == jumpSpeed.Count)
         {

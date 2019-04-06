@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MProjCtrl : MParent
 {
-    public float direction = 1; //used to store player direction even when no movement is occuring
+    public Vector2 direction = new Vector2(1f, 0f); //used to store player direction even when no movement is occuring
     private bool createprojectile = true;
     public float bullettime; //time between projectiles
     private Movement movement;
@@ -19,11 +19,7 @@ public class MProjCtrl : MParent
     void Update()
     {
         //finds the direction that the player faced most recently
-        if (movement.speed != 0)
-        {
-            direction = movement.speed;
-        }
-        
+        direction = this.transform.right;
         //determines if the projectile can be created; if so, one is created
         if (Input.GetButtonDown("Fire1") && createprojectile)
         {

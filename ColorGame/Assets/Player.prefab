@@ -89,7 +89,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 19.570389
+  orthographic size: 15.555826
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WOKE: 0
-  direction: 1
+  direction: {x: 1, y: 0}
   bullettime: 1.5
   Projectile: {fileID: 785118982223984591, guid: a723626cb85161e4383da495dbed2986,
     type: 3}
@@ -371,8 +371,8 @@ GameObject:
   - component: {fileID: 8160625629498246827}
   - component: {fileID: 8811388232152517859}
   - component: {fileID: 3967856605079030620}
-  - component: {fileID: 4608633422181012582}
-  - component: {fileID: 2363287854129894773}
+  - component: {fileID: 7694393351273083762}
+  - component: {fileID: 6012094778604853716}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -387,8 +387,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358165726238153871}
-  m_LocalRotation: {x: -0, y: -0.008727774, z: 0, w: 0.9999619}
-  m_LocalPosition: {x: -0.625, y: -0.91, z: -0.011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4503367356431066}
@@ -461,7 +461,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4608633422181012582
+--- !u!61 &7694393351273083762
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,10 +474,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.625, y: 1.25}
+  m_Offset: {x: 0, y: 0.61}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.25, y: 1.25}
     newSize: {x: 1.25, y: 1.25}
     adaptiveTilingThreshold: 0.5
@@ -485,9 +485,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.24, y: 1.25}
+  m_Size: {x: 1.25, y: 1.25}
   m_EdgeRadius: 0
---- !u!58 &2363287854129894773
+--- !u!58 &6012094778604853716
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,6 +500,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.625, y: 0.625}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.625
