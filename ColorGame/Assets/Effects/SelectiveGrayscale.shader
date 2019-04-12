@@ -1,4 +1,4 @@
-﻿Shader "Hidden/try"
+﻿Shader "Hidden/SelectiveGrayscale"
 {
     Properties
     {
