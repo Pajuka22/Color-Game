@@ -35,6 +35,7 @@ public class MovementController : MonoBehaviour {
     bool inWater = false;
     public int currentHealth;
     int currentLives;
+    public Collider2D thisCollider;
 
     // Use this for initialization
     void Start () {
@@ -143,9 +144,9 @@ public class MovementController : MonoBehaviour {
             inWater = true;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D col)
     {
-        if ((WhatIsWater.value & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        if ((WhatIsWater.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer)
         {
             inWater = false;
         }
@@ -155,7 +156,7 @@ public class MovementController : MonoBehaviour {
         if (Has<MechanicHurts>(col.gameObject) ? col.gameObject.GetComponent<MechanicHurts>().WOKE : false
             && invincibility <= 0)
         {
-            if ((Has<SpikeMechanic>(col.gameObject) ? col.collider == col.gameObject.GetComponent<SpikeMechanic>().Damager : true))
+            if ((Has<MechanicHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MechanicHurts>().Damager : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
@@ -172,6 +173,10 @@ public class MovementController : MonoBehaviour {
                     die();
                 }
             }
+        }
+        if (col.gameObject.tag == "Enemy")
+        {
+            Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
     }
     private void die()

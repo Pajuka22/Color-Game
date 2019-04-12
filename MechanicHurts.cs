@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalker : MechanicEnemy
+public class MechanicHurts : MechanicParent
 {
+    public int Damage = 1;
+    public Collider2D Damager;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,11 +15,6 @@ public class EnemyWalker : MechanicEnemy
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    public override void ActAwake()
-    {
-        //base.ActAwake();
         
     }
 }

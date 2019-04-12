@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeMechanic : MechanicHurts
+public class IAmColor : MonoBehaviour
 {
-    public Collider2D Damager;
+    public Colors.ColorEnum WhatColorAmI;
     // Start is called before the first frame update
     void Start()
-    { 
-
+    {
+        
     }
 
     // Update is called once per frame
