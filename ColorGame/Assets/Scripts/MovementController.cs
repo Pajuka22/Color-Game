@@ -182,7 +182,7 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (Has<MEnemy>(col.gameObject))
+        if (Has<MEnemy>(col.gameObject) || Has<MProjectile>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
@@ -216,7 +216,7 @@ public class MovementController : MonoBehaviour {
     {
         //input dying code here.
     }
-    public bool Has<T>(GameObject GO)
+    public static bool Has<T>(GameObject GO)
     {
         return GO.GetComponent<T>() != null;
     }

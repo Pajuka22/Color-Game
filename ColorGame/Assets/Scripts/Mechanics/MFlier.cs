@@ -18,6 +18,7 @@ public class MFlier : MEnemy
     public Rigidbody2D RB;
     bool tookDamage;
     GameObject newProj;
+    float curHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +65,7 @@ public class MFlier : MEnemy
         currentState = States.Moving;
         float direction = Random.Range(0, 2*Mathf.PI);
         RB.velocity = new Vector2(Mathf.Cos(direction), Mathf.Sin(direction)) * moveSpeed;
-        StartCoroutine(WaitSec(2.5f));
+        StartCoroutine(WaitSec(2.5f, curHealth));
     }
     void Shoot(GameObject Target)
     {
@@ -91,6 +92,14 @@ public class MFlier : MEnemy
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
+        if(MovementController.Has<MProjectile>(col.gameObject) && col.gameObject.tag == "ofPlayer")
+        {
+            curHealth -= 1;
+            if(curHealth <= 0)
+            {
+                Destroy(this, 0);
+            }
+        }
     }
     IEnumerator StartShooting(float Time)
     {
@@ -104,12 +113,11 @@ public class MFlier : MEnemy
         yield return new WaitForSeconds(Time);
         Shoot(Target);
     }
-    IEnumerator WaitSec(float Time)
+    IEnumerator WaitSec(float Time, float health)
     {
         yield return new WaitForSeconds(Time);
-        if (tookDamage)
+        if (curHealth < health)
         {
-            tookDamage = false;
             yield break;
         }
         StartCoroutine(StartShooting(1f));

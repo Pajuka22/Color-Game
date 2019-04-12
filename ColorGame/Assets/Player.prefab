@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 20646161095912984}
   - component: {fileID: 124939987865406088}
   - component: {fileID: 81199805584311174}
+  - component: {fileID: 8496772976576295255}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -73,7 +74,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.13385546, g: 0.6001104, b: 0.6037736, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -89,7 +90,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15.555826
+  orthographic size: 7.07
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -121,6 +122,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741548291143546}
   m_Enabled: 1
+--- !u!114 &8496772976576295255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741548291143546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cda9b1adccc984bb2ae8b2d457b459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EffectMaterial: {fileID: 2100000, guid: 98daf1e23dc93c24d8eb65c1608002d9, type: 2}
 --- !u!1 &1833519083682252
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +182,6 @@ GameObject:
   - component: {fileID: 4523879270185438292}
   - component: {fileID: 5698223013165057594}
   - component: {fileID: 2681692171077255675}
-  - component: {fileID: 5492665063372964014}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -343,23 +356,6 @@ MonoBehaviour:
   WOKE: 0
   PlayerMovement: {fileID: 114115393014132784}
   Height: 30
---- !u!114 &5492665063372964014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863998422389456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8a3d3eeea238c4eb7e916c7c6f3362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WOKE: 0
-  direction: {x: 1, y: 0}
-  bullettime: 1.5
-  Projectile: {fileID: 785118982223984591, guid: a723626cb85161e4383da495dbed2986,
-    type: 3}
 --- !u!1 &1358165726238153871
 GameObject:
   m_ObjectHideFlags: 0
