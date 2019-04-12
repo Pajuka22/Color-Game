@@ -45,7 +45,9 @@ public class MWalker : MEnemy
         myTransform = this.transform;
         Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
         grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
-        
+
+        bool blocked = Physics2D.Linecast(linecastPos + new Vector2(0, 0.25f), linecastPos + new Vector2(0.5f * sign(RB.velocity.x), 0.25f), WhatIsGround);
+
         Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
         if(myTransform.right != new Vector3(sign(RB.velocity.x), 0f , 0f) && RB.velocity.magnitude != 0)
         {
@@ -55,7 +57,7 @@ public class MWalker : MEnemy
         {
             case States.Walking:
                 {
-                    if (grounded)
+                    if (grounded && !blocked)
                     {
                         RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, RB.velocity.y) : new Vector2(-speed, RB.velocity.y);
                     }
@@ -89,6 +91,11 @@ public class MWalker : MEnemy
                             RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
                             canJump = false;
                         }
+                    }
+                    if(blocked && canJump)
+                    {
+                        RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
+                        canJump = false;
                     }
                     if ((player.transform.position - this.transform.position).magnitude > chaseRad)
                     {
