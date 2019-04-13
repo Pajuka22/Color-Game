@@ -54,13 +54,6 @@
 
             float4 frag (v2f i) : SV_Target
             {
-				bool red = _Red != 0;
-				bool orange = _Orange != 0;
-				bool yellow = _Yellow != 0;
-				bool green = _Green != 0;
-				bool blue = _Blue != 0;
-				bool purple = _Purple != 0;
-
 				float4 col = tex2D(_MainTex, i.uv);
 				float gray = 0.3*col.r + 0.59*col.g + 0.11*col.b;
 				float h = 0;
@@ -82,63 +75,94 @@
 				if (h < 0) {
 					h += 360;
 				}
+				//start red stuff
 				if (h >= 300 || h <= 17) {
-					if (_Red != 0) {
-						if (h >= 300 && h <= 330 && _Purple == 0) {
-							col.rgb = gray + (col.rgb - gray) * ((h - 300) / 30);
-							return col;
-						}
-						if (h <= 300 && h >= 7 && _Orange == 0) {
-							col.rgb = gray + (col.rgb - gray) * ((17 - h) / 10);
-						}
+					if (h >= 300 && h <= 330) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 300) / 30 * _Red + (_Purple + _Red) / 2 * (330 - h) / 30);
+						return col;
+					}
+					else if (h <= 17 && h >= 7) {
+						col.rgb = gray + (col.rgb - gray) * ((17 - h) / 10 * _Red + (_Orange + _Red) / 2 * (h - 7) / 10);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Red;
+						return col;
 					}
 				}
-				if (h > 17 && h <= 40) {
-					if (_Orange != 0) {
-						if (_Red == 0) {
-
-						}
-						if (_Yellow == 0) {
-
-						}
+				//start orange stuff
+				if (h > 17 && h <= 50) {
+					if (h >= 40) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 40) / 10 * _Yellow + (50 - h) / 10 * (_Orange + _Yellow)/2);
+						return col;
+					}
+					else if (h <= 30) {
+						col.rgb = gray + (col.rgb - gray) * ((30 - h) / 13 * (_Red + _Orange) / 2 + _Orange * (h - 17) / 13);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Orange;
+						return col;
 					}
 				}
-				if (h > 40 && h <= 70) {
-					if (_Yellow != 0) {
-
+				//start yellow stuff
+				if (h >= 50 && h <= 80) {
+					if (h > 70) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 70) / 10 * (_Yellow + _Green) / 2 + (80 - h) / 10 * _Yellow);
+						return col;
+					}
+					else if (h < 60) {
+						col.rgb = gray + (col.rgb - gray) * ((60 - h) / 10 * _Orange + (h - 50) / 10 * (_Orange + _Yellow) / 2);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Yellow;
+						return col;
 					}
 				}
-				if (h > 70 && h < 180) {
-					if (_Green != 0) {
-
+				//start green stuff
+				if (h > 80 && h < 180) {
+					if (h <= 90) {
+						col.rgb = gray + (col.rgb - gray) * ((90 - h) / 10 * (_Green + _Yellow) / 2 + (h - 80) / 10 * _Green);
+						return col;
+					}
+					else if (h >= 150) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 150) / 30 * (_Blue + _Green) / 2 + (180 - h) / 30 * _Green);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Green;
+						return col;
 					}
 				}
+				//start blue stuff
 				if (h >= 180 && h <= 270) {
-					if (_Blue != 0) {
-
+					if (h >= 260) {
+						col.rgb = gray + (col.rgb - gray) * ((270 - h) / 10 * _Blue + (h - 260) / 10 * (_Purple + _Blue) / 2);
+						return col;
+					}
+					else if (h <= 200) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 180) / 20 * _Blue + (200 - h) / 20 * _Green);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Blue;
+						return col;
 					}
 				}
+				//start purple stuff
 				if (h > 270 && h < 300) {
-					if (_Purple != 0) {
-
+					if (h >= 290) {
+						col.rgb = gray + (col.rgb - gray) * ((300 - h) / 10 * _Purple + (h - 290) / 10 * (_Red + _Purple) / 2);
+						return col;
+					}
+					else if (h <= 280) {
+						col.rgb = gray + (col.rgb - gray) * ((h - 270) / 10 * _Purple + (280 - h) / 10 * (_Blue + _Purple) / 2);
+						return col;
 					}
 					else {
-						col.rgb = gray;
+						col.rgb = gray + (col.rgb - gray) * _Purple;
+						return col;
 					}
 				}
                 // just invert the colors
