@@ -21,11 +21,21 @@ public class MProjCtrl : MParent
         //finds the direction that the player faced most recently
         direction = this.transform.right;
         //determines if the projectile can be created; if so, one is created
-        if (Input.GetButtonDown("Fire1") && createprojectile)
+        if (Input.GetButtonDown("Fire1") && createprojectile && WOKE)
         {
             createprojectile = false; //prevents projectile spam
             GameObject newProjectile = Instantiate(Projectile) as GameObject;
             newProjectile.transform.position = new Vector2(transform.position.x, transform.position.y);
+            
+            if(MWalker.sign(direction.x) == 1)
+            {
+                newProjectile.transform.Rotate(0f, 0f, Mathf.Atan(direction.y / direction.x) * 180 / Mathf.PI);
+            }
+            else
+            {
+                newProjectile.transform.Rotate(0f, 0f, Mathf.Atan(direction.y / -direction.x) * 180 / Mathf.PI);
+                //newProjectile.transform.Rotate(0f, 180f, 0f);
+            }
             newProjectile.GetComponent<MProjectile>().direction = direction; //tells the projectile the direction to go in
             Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
         }

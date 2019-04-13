@@ -70,6 +70,7 @@ public class MFlier : MEnemy
     void Shoot(GameObject Target)
     {
         newProj = Instantiate(projectile) as GameObject;
+        Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), newProj.GetComponent<Collider2D>());
         newProj.transform.position = this.transform.position;
         newProj.GetComponent<MProjectile>().direction = (Target.transform.position - this.transform.position);
         Move();

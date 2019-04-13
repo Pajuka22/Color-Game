@@ -178,8 +178,6 @@ GameObject:
   - component: {fileID: 50382783054794746}
   - component: {fileID: 114020754568422712}
   - component: {fileID: 114115393014132784}
-  - component: {fileID: 8695928140782559721}
-  - component: {fileID: 4523879270185438292}
   - component: {fileID: 5698223013165057594}
   - component: {fileID: 2681692171077255675}
   m_Layer: 8
@@ -300,33 +298,6 @@ MonoBehaviour:
   invincibilityTime: 1
   invincibility: 0
   currentHealth: 0
---- !u!114 &8695928140782559721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863998422389456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 912d7cf29e692ea47942da26a0dde5a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WhatColor: 3
-  Mechanic: {fileID: 4523879270185438292}
---- !u!114 &4523879270185438292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863998422389456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a54b9032223eb924abd645008e34b172, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WOKE: 0
 --- !u!114 &5698223013165057594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +340,8 @@ GameObject:
   - component: {fileID: 3967856605079030620}
   - component: {fileID: 7694393351273083762}
   - component: {fileID: 6012094778604853716}
+  - component: {fileID: 7119476366552911638}
+  - component: {fileID: 8424879339823419202}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -499,3 +472,34 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.625
+--- !u!114 &7119476366552911638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358165726238153871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8a3d3eeea238c4eb7e916c7c6f3362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WOKE: 0
+  direction: {x: 1, y: 0}
+  bullettime: 0
+  Projectile: {fileID: 785118982223984591, guid: a723626cb85161e4383da495dbed2986,
+    type: 3}
+--- !u!114 &8424879339823419202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358165726238153871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912d7cf29e692ea47942da26a0dde5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhatColor: 3
+  Mechanic: {fileID: 7119476366552911638}
