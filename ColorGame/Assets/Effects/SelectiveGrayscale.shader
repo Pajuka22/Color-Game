@@ -59,7 +59,7 @@
 				float h = 0;
 				float max = 0;
 				float min = 255;
-				max = col.r > col.g ? (col.r > col.b ? col.r : col.b) : (col.g > col.b ? col.g : col.b);
+				max = col.r >= col.g ? (col.r >= col.b ? col.r : col.b) : (col.g >= col.b ? col.g : col.b);
 				min = col.r < col.g ? (col.r < col.b ? col.r : col.b) : (col.g < col.b ? col.g : col.b);
 				if (max == col.r) {
 					h = 60 * (((col.g - col.b)/(max - min)) % 6);
@@ -80,6 +80,20 @@
 					if (h >= 300 && h <= 330) {
 						col.rgb = gray + (col.rgb - gray) * ((h - 300) / 30 * _Red + (_Purple + _Red) / 2 * (330 - h) / 30);
 						return col;
+						/*
+						the color's rgb values should equal the gray's values + some number * col.rgb - gray
+						so that value remains constant, varying saturation.
+						that value would normally be _Red, but we want to interpolate between red and purple.
+						To do this, we add (h-300)/30 * _Red | 300 <= h <= 300, so that (h-300)/30 is between 1 and 0.
+						then we add (330 - h)/30 * average of purple and red saturation so that we can have the average at h = 300.
+						(h - 300)/30 == 1 - (330 - h)/30 when 300 <= h <= 300, so the total adds up to one, weighting the saturation
+						based on how far between red and purple it is.
+
+						We do the same thing for the rest of them, changing the value so that the 30 is replaced by the difference
+						between the max and min of the tweening zone for each color, and replace 300 with the min and 330 with the max.
+						*/
+
+						//TL;DR: finds the weighted average of _Red and (_Red + _Purple)/2 and multiplies that by col.rgb - gray, then adds that to gray.
 					}
 					else if (h <= 17 && h >= 7) {
 						col.rgb = gray + (col.rgb - gray) * ((17 - h) / 10 * _Red + (_Orange + _Red) / 2 * (h - 7) / 10);
@@ -93,7 +107,8 @@
 				//start orange stuff
 				if (h > 17 && h <= 50) {
 					if (h >= 40) {
-						col.rgb = gray + (col.rgb - gray) * ((h - 40) / 10 * _Yellow + (50 - h) / 10 * (_Orange + _Yellow)/2);
+						//col.rgb = gray + (col.rgb - gray) * ((h - 40) / 10 * _Orange + (50 - h) / 10 * (_Orange + _Yellow)/2);
+						col.rgb = gray + (col.rgb - gray) * ((h - 40) / 10 * (_Orange + _Yellow) / 2 + (50 - h) / 10 * _Orange);
 						return col;
 					}
 					else if (h <= 30) {
@@ -112,7 +127,7 @@
 						return col;
 					}
 					else if (h < 60) {
-						col.rgb = gray + (col.rgb - gray) * ((60 - h) / 10 * _Orange + (h - 50) / 10 * (_Orange + _Yellow) / 2);
+						col.rgb = gray + (col.rgb - gray) * ((60 - h) / 10 * (_Orange + _Yellow) / 2 + (h - 50) / 10 *_Yellow);
 						return col;
 					}
 					else {
@@ -142,7 +157,7 @@
 						return col;
 					}
 					else if (h <= 200) {
-						col.rgb = gray + (col.rgb - gray) * ((h - 180) / 20 * _Blue + (200 - h) / 20 * _Green);
+						col.rgb = gray + (col.rgb - gray) * ((h - 180) / 20 * _Blue + (200 - h) / 20 * (_Green + _Blue) / 2);
 						return col;
 					}
 					else {
