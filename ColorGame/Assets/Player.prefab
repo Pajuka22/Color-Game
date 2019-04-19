@@ -180,6 +180,8 @@ GameObject:
   - component: {fileID: 114115393014132784}
   - component: {fileID: 5698223013165057594}
   - component: {fileID: 2681692171077255675}
+  - component: {fileID: 2769828343809606946}
+  - component: {fileID: 5674188184493913540}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -290,7 +292,7 @@ MonoBehaviour:
   jumpSpeed: []
   WhatHurts:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   hashealth: 0
   haslives: 0
   health: 1
@@ -327,6 +329,33 @@ MonoBehaviour:
   WOKE: 0
   PlayerMovement: {fileID: 114115393014132784}
   Height: 30
+--- !u!114 &2769828343809606946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863998422389456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77374b647c21bcb4c89ca4c315aebc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WOKE: 1
+  Damage: 15
+--- !u!114 &5674188184493913540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863998422389456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb964c7a42e2e841b280ac0987590e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Current: 0
 --- !u!1 &1358165726238153871
 GameObject:
   m_ObjectHideFlags: 0

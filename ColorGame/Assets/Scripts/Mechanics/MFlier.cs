@@ -39,7 +39,7 @@ public class MFlier : MEnemy
                 break;
             case States.Moving:
                 {
-                    if(MWalker.sign(RB.velocity.x) != MWalker.sign(this.transform.right.x))
+                    if(MonoLib.sign(RB.velocity.x) != MonoLib.sign(this.transform.right.x))
                     {
                         transform.Rotate(0, 180, 0);
                     }
@@ -77,11 +77,11 @@ public class MFlier : MEnemy
     }
     bool checkRight()
     {
-        return Physics2D.Linecast(this.transform.position, this.transform.position + this.transform.right * rightRange * MWalker.sign(RB.velocity.x), WhatIsGround);
+        return Physics2D.Linecast(this.transform.position, this.transform.position + this.transform.right * rightRange * MonoLib.sign(RB.velocity.x), WhatIsGround);
     }
     bool checkUp()
     {
-        return Physics2D.Linecast(this.transform.position, this.transform.position + this.transform.up * upRange * MWalker.sign(RB.velocity.y), WhatIsGround);
+        return Physics2D.Linecast(this.transform.position, this.transform.position + this.transform.up * upRange * MonoLib.sign(RB.velocity.y), WhatIsGround);
     }
     public override void Activate()
     {
@@ -106,7 +106,7 @@ public class MFlier : MEnemy
     {
         RB.velocity = Vector2.zero;
 
-        if(MWalker.sign(Target.transform.position.x - this.transform.position.x) != this.transform.right.x)
+        if(MonoLib.sign(Target.transform.position.x - this.transform.position.x) != this.transform.right.x)
         {
             transform.Rotate(new Vector3(0f, 180f, 0f));
         }

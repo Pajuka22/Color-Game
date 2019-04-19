@@ -46,10 +46,10 @@ public class MWalker : MEnemy
         Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
         grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
 
-        bool blocked = Physics2D.Linecast(linecastPos + new Vector2(0, 0.25f), linecastPos + new Vector2(0.5f * sign(RB.velocity.x), 0.25f), WhatIsGround);
+        bool blocked = Physics2D.Linecast(linecastPos + new Vector2(0, 0.25f), linecastPos + new Vector2(0.5f * MonoLib.sign(RB.velocity.x), 0.25f), WhatIsGround);
 
         Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
-        if(myTransform.right != new Vector3(sign(RB.velocity.x), 0f , 0f) && RB.velocity.magnitude != 0)
+        if(myTransform.right != new Vector3(MonoLib.sign(RB.velocity.x), 0f , 0f) && RB.velocity.magnitude != 0)
         {
             transform.Rotate(new Vector3(0, 180, 0));
         }
@@ -79,7 +79,7 @@ public class MWalker : MEnemy
                 break;
             case States.Running:
                 {
-                    RB.velocity = new Vector2(chaseSpeed * sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
+                    RB.velocity = new Vector2(chaseSpeed * MonoLib.sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
                     if (grounded)
                     {
                         canJump = true;
@@ -135,20 +135,7 @@ public class MWalker : MEnemy
     {
         
     }
-    public static int sign(float val)
-    {
-        if(val == 0)
-        {
-            return 0;
-        }else if(val < 0)
-        {
-            return -1;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+
     public bool checkGround()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(2 * width, 2 * height) * 1.1f, 0f, WhatIsGround);
