@@ -70,7 +70,7 @@ public class MovementController : MonoBehaviour {
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if(MWalker.sign(RB.velocity.x) != MWalker.sign(Obj.transform.right.x))
+        if(MonoLib.sign(RB.velocity.x) != MonoLib.sign(Obj.transform.right.x))
         {
             if(RB.velocity.x != 0)
             {
@@ -151,10 +151,10 @@ public class MovementController : MonoBehaviour {
         {
             inWater = true;
         }
-        if (Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
+        if (MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
         && invincibility <= 0)
         {
-            if ((Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().Damagers.Contains(col) : true))
+            if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().Damagers.Contains(col) : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)
@@ -182,14 +182,14 @@ public class MovementController : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (Has<MEnemy>(col.gameObject) || Has<MProjectile>(col.gameObject))
+        if (MonoLib.Has<MEnemy>(col.gameObject) || MonoLib.Has<MProjectile>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
-        if (Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
+        if (MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
             && invincibility <= 0)
         {
-            if ((Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
+            if ((MonoLib.Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
             {
                 invincibility = invincibilityTime;
                 if (hashealth)

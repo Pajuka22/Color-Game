@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MEnemy : MHurts
 {
-    
+    public float MaxHealth;
+    float CurrentHealth;
+    public LayerMask whatHurts;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +21,19 @@ public class MEnemy : MHurts
     public virtual void ActAwake()
     {
 
+    }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (WOKE)
+        {
+            if (MonoLib.Has<MEnemyHurts>(col.gameObject))
+            {
+                CurrentHealth -= col.gameObject.GetComponent<MEnemyHurts>().WOKE ? col.gameObject.GetComponent<MEnemyHurts>().Damage : 0;
+                if (CurrentHealth <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
     }
 }

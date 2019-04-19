@@ -21,7 +21,7 @@ public class MProjCtrl : MParent
         //finds the direction that the player faced most recently
         direction = this.transform.right;
         //determines if the projectile can be created; if so, one is created
-        if (Input.GetButtonDown("Fire1") && createprojectile)
+        if (Input.GetButtonDown("Fire1") && createprojectile && WOKE)
         {
             createprojectile = false; //prevents projectile spam
             GameObject newProjectile = Instantiate(Projectile) as GameObject;
