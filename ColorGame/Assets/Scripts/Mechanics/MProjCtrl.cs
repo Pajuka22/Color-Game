@@ -9,10 +9,12 @@ public class MProjCtrl : MParent
     public float bullettime; //time between projectiles
     private Movement movement;
     public GameObject Projectile;
+    private Transform spawnLoc;
 
     void Start()
     {
         movement = GetComponent<Movement>();
+        spawnLoc = transform.Find("ShootPos");
     }
 
     // Update is called once per frame
@@ -25,8 +27,12 @@ public class MProjCtrl : MParent
         {
             createprojectile = false; //prevents projectile spam
             GameObject newProjectile = Instantiate(Projectile) as GameObject;
-            newProjectile.transform.position = new Vector2(transform.position.x, transform.position.y);
-            newProjectile.GetComponent<MProjectile>().direction = direction; //tells the projectile the direction to go in
+            for (int i = 0; i < GetComponents<Collider2D>().Length; i++)
+            {
+                Physics2D.IgnoreCollision(this.gameObject.GetComponents<Collider2D>()[i], newProjectile.GetComponent<Collider2D>());
+            }
+            newProjectile.transform.position = new Vector2(spawnLoc.transform.position.x, spawnLoc.transform.position.y);
+            newProjectile.GetComponent<MProjectile>().direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //tells the projectile the direction to go in
             Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
         }
     }

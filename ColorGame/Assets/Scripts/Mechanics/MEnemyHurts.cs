@@ -5,6 +5,7 @@ using UnityEngine;
 public class MEnemyHurts : MParent
 {
     public float Damage = 1;
+    public bool hasDamaged = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,10 @@ public class MEnemyHurts : MParent
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+    private void OnCollisionEnter2D(Collision2D col)
     {
         
     }

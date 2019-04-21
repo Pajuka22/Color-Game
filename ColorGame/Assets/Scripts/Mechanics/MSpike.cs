@@ -16,4 +16,12 @@ public class MSpike : MHurts
     {
         
     }
+    public override void Activate()
+    {
+        base.Activate();
+        for(int i = 0; i < GetComponents<Collider2D>().Length; i++)
+        {
+            GetComponents<Collider2D>()[i].isTrigger = false;
+        }
+    }
 }

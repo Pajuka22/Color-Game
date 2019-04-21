@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MovementController : MonoBehaviour {
 
     public Rigidbody2D RB;
@@ -34,7 +35,7 @@ public class MovementController : MonoBehaviour {
     public float invincibility = 0;
     bool inWater = false;
     public int currentHealth;
-    int currentLives;
+    public int currentLives;
     GameObject Obj;
 
     // Use this for initialization
@@ -151,7 +152,7 @@ public class MovementController : MonoBehaviour {
         {
             inWater = true;
         }
-        if (MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
+        if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false)
         && invincibility <= 0)
         {
             if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().Damagers.Contains(col) : true))
@@ -186,15 +187,16 @@ public class MovementController : MonoBehaviour {
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
         }
-        if (MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false
+        if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false)
             && invincibility <= 0)
         {
             if ((MonoLib.Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
             {
                 invincibility = invincibilityTime;
+                RB.AddForce(new Vector2(0, 500));
                 if (hashealth)
                 {
-                    //currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
+                    currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
                 }
                 if (health <= 0 || !hashealth)
                 {

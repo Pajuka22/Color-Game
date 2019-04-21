@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 5698223013165057594}
   - component: {fileID: 2681692171077255675}
   - component: {fileID: 2769828343809606946}
-  - component: {fileID: 5674188184493913540}
+  - component: {fileID: 7942919768259994761}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8015de280cd006408618fd6fbc9fe03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 10
   controller: {fileID: 114115393014132784}
 --- !u!114 &114115393014132784
 MonoBehaviour:
@@ -275,10 +275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RB: {fileID: 50382783054794746}
   walkSpeed: 10
-  acceleration: 1
+  acceleration: 3
   WhatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967263
+    m_Bits: 1
   jumpHeight:
   - 50
   variableJump: 0
@@ -288,18 +288,19 @@ MonoBehaviour:
   waterFriction: 0.5
   WhatIsWater:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   jumpSpeed: []
   WhatHurts:
     serializedVersion: 2
     m_Bits: 1536
-  hashealth: 0
-  haslives: 0
+  hashealth: 1
+  haslives: 1
   health: 1
   lives: 3
   invincibilityTime: 1
   invincibility: 0
   currentHealth: 0
+  currentLives: 0
 --- !u!114 &5698223013165057594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WOKE: 1
   Damage: 15
---- !u!114 &5674188184493913540
+  hasDamaged: 0
+--- !u!114 &7942919768259994761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -388,7 +390,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 777371738652431285}
   m_Father: {fileID: 4503367356431066}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -515,7 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WOKE: 0
   direction: {x: 1, y: 0}
-  bullettime: 0
+  bullettime: 0.5
   Projectile: {fileID: 785118982223984591, guid: a723626cb85161e4383da495dbed2986,
     type: 3}
 --- !u!114 &8424879339823419202
@@ -532,3 +535,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhatColor: 3
   Mechanic: {fileID: 7119476366552911638}
+--- !u!1 &8277101101196562725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 777371738652431285}
+  m_Layer: 0
+  m_Name: ShootPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &777371738652431285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277101101196562725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8160625629498246827}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
