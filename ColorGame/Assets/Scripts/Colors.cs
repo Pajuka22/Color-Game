@@ -22,7 +22,7 @@ public class Colors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WhatColor <= Collected.Current)
+        if (Collected.Current[(int)WhatColor])
         {
             Mechanic.Activate();
             enabled = false;
