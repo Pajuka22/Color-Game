@@ -17,7 +17,7 @@ public class SelectGrayEff : MonoBehaviour
     float DeltaT;
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        Graphics.Blit(source, destination, EffectMaterial);
+        Graphics.Blit(src, dest, EffectMaterial);
 
         // exclude layers
         Camera cam = null;
@@ -25,7 +25,7 @@ public class SelectGrayEff : MonoBehaviour
 
         if (cam && excludeLayers.value != 0)
         {
-            cam.targetTexture = destination;
+            cam.targetTexture = dest;
             cam.cullingMask = excludeLayers;
             cam.Render();
         }
