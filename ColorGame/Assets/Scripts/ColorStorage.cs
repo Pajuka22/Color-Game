@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorStorage : MonoBehaviour
 {
-    public Colors.ColorEnum Current;
+    public static Colors.ColorEnum Current;
     // Start is called before the first frame update
     void Start()
     {
