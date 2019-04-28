@@ -32,7 +32,8 @@ public class MProjCtrl : MParent
                 Physics2D.IgnoreCollision(this.gameObject.GetComponents<Collider2D>()[i], newProjectile.GetComponent<Collider2D>());
             }
             newProjectile.transform.position = new Vector2(spawnLoc.transform.position.x, spawnLoc.transform.position.y);
-            newProjectile.GetComponent<MProjectile>().direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //tells the projectile the direction to go in
+            newProjectile.GetComponent<MProjectile>().direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnLoc.transform.position; //tells the projectile the direction to go in
+            newProjectile.GetComponent<MProjectile>().Creator = this.gameObject;
             Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
         }
     }

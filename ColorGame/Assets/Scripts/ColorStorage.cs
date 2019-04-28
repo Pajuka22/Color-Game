@@ -19,28 +19,11 @@ public class ColorStorage : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (MonoLib.Has<IAmColor>(collision.gameObject) && Eff != null)
+        if (MonoLib.Has<IAmColor>(collision.gameObject))// && Eff != null)
         {
-            switch (collision.gameObject.GetComponent<IAmColor>().WhatColorAmI)
+            if(Eff != null)
             {
-                case Colors.ColorEnum.Red:
-                    Eff.IncreaseColor(ref Eff.IRed, 1);
-                    break;
-                case Colors.ColorEnum.Orange:
-                    Eff.IncreaseColor(ref Eff.IOrange, 1);
-                    break;
-                 case Colors.ColorEnum.Yellow:
-                    Eff.IncreaseColor(ref Eff.IYellow, 1);
-                    break;
-                case Colors.ColorEnum.Green:
-                    Eff.IncreaseColor(ref Eff.IGreen, 1);
-                    break;
-                case Colors.ColorEnum.Blue:
-                    Eff.IncreaseColor(ref Eff.IBlue, 1);
-                    break;
-                case Colors.ColorEnum.Purple:
-                    Eff.IncreaseColor(ref Eff.IPurple, 1);
-                    break;
+                Eff.IncreaseColor((int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI, 1);
             }
             Current[(int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI] = true;
         }

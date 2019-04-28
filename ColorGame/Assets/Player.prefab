@@ -135,6 +135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EffectMaterial: {fileID: 2100000, guid: 98daf1e23dc93c24d8eb65c1608002d9, type: 2}
+  excludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1833519083682252
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb964c7a42e2e841b280ac0987590e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Current: 0
+  Current: 
+  Eff: {fileID: 8496772976576295255}
 --- !u!1 &1358165726238153871
 GameObject:
   m_ObjectHideFlags: 0

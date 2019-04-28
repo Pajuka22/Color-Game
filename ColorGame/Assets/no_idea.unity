@@ -265,6 +265,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &271755585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8496772976576295255, guid: f27ccc4994aea384f94f0ff893209ebf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1258373837}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cda9b1adccc984bb2ae8b2d457b459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &288315304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,6 +1545,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7942919768259994761, guid: f27ccc4994aea384f94f0ff893209ebf,
+        type: 3}
+      propertyPath: Eff
+      value: 
+      objectReference: {fileID: 271755585}
     - target: {fileID: 7119476366552911638, guid: f27ccc4994aea384f94f0ff893209ebf,
         type: 3}
       propertyPath: bullettime
@@ -1542,7 +1559,8 @@ PrefabInstance:
         type: 3}
       propertyPath: Projectile
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 785118982223984591, guid: a723626cb85161e4383da495dbed2986,
+        type: 3}
     - target: {fileID: 8424879339823419202, guid: f27ccc4994aea384f94f0ff893209ebf,
         type: 3}
       propertyPath: Mechanic
