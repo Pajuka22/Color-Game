@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ColorStorage : MonoBehaviour
 {
-    public Colors.ColorEnum Current;
+    public bool[] Current;
+    public SelectGrayEff Eff;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Current = new bool[9];
     }
 
     // Update is called once per frame
@@ -18,9 +19,13 @@ public class ColorStorage : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<IAmColor>() != null)
+        if (MonoLib.Has<IAmColor>(collision.gameObject))// && Eff != null)
         {
-            Current = collision.gameObject.GetComponent<IAmColor>().WhatColorAmI;
+            if(Eff != null)
+            {
+                Eff.IncreaseColor((int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI, 1);
+            }
+            Current[(int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI] = true;
         }
     }
 }

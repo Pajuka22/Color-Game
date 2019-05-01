@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1710967718272033224}
   - component: {fileID: 3406958695518892770}
   - component: {fileID: 6426989039379200586}
+  - component: {fileID: 795297606501265505}
   m_Layer: 11
   m_Name: Projectile
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0151715b8da549d41b22dee7414d2e44, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 43046582bd9568a419b1a823d1bf2ec1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &1710967718272033224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
   bulletspeed: 30
+  Creator: {fileID: 0}
 --- !u!50 &3406958695518892770
 Rigidbody2D:
   serializedVersion: 4
@@ -108,7 +110,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -132,4 +134,19 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Radius: 1.7
+--- !u!114 &795297606501265505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785118982223984591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77374b647c21bcb4c89ca4c315aebc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WOKE: 1
+  Damage: 1
+  hasDamaged: 0

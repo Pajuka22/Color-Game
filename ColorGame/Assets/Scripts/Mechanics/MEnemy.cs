@@ -20,7 +20,7 @@ public class MEnemy : MHurts
     }
     public virtual void ActAwake()
     {
-
+        
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -29,6 +29,22 @@ public class MEnemy : MHurts
             if (MonoLib.Has<MEnemyHurts>(col.gameObject))
             {
                 CurrentHealth -= col.gameObject.GetComponent<MEnemyHurts>().WOKE ? col.gameObject.GetComponent<MEnemyHurts>().Damage : 0;
+                col.gameObject.GetComponent<MEnemyHurts>().hasDamaged = true;
+                if (CurrentHealth <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (WOKE)
+        {
+            if (MonoLib.Has<MEnemyHurts>(col.gameObject))
+            {
+                CurrentHealth -= col.gameObject.GetComponent<MEnemyHurts>().WOKE ? col.gameObject.GetComponent<MEnemyHurts>().Damage : 0;
+                col.gameObject.GetComponent<MEnemyHurts>().hasDamaged = true;
                 if (CurrentHealth <= 0)
                 {
                     Destroy(this.gameObject);
