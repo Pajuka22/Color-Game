@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class MenuController : MonoBehaviour
@@ -12,7 +13,7 @@ public class MenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Buttons[index].Current = ButtonParent.States.Selected;
     }
 
     // Update is called once per frame
@@ -28,7 +29,7 @@ public class MenuController : MonoBehaviour
                     if (!keydown)
                     {
 
-                        if (Input.GetAxis("Vertical") < 0)
+                        if (Input.GetAxis("Vertical") > 0)
                         {
                             index++;
                             Buttons[index - 1].Current = ButtonParent.States.Deselected;
@@ -54,6 +55,7 @@ public class MenuController : MonoBehaviour
             }
             if (Input.GetButtonDown("Submit"))
             {
+                Submit();
                 Buttons[index].Current = ButtonParent.States.Submitted;
                 //Invoke("Submit", Buttons[index].SubmitTime);
                 //submitted = true;
