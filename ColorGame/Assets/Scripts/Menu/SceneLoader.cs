@@ -11,12 +11,11 @@ public class SceneLoader : ButtonParent
     public override void Select()
     {
         base.Select();
-        //StartCoroutine(loadScene(animTime));
-        SceneManager.LoadScene("Scenes/no_idea");
+        StartCoroutine(loadScene(animTime));
     }
     public IEnumerator loadScene(float time)
     {
         yield return new WaitForSeconds(time);
-
+        SceneManager.LoadScene("Scenes/no_idea");
     }
 }

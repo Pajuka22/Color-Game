@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour {
     public float acceleration = 1;//how quickly you accelerate when changing direction or starting movement
     [SerializeField] private LayerMask WhatIsGround;
     public List<float> jumpHeight = new List<float>();//list of heights of jumps. Allows for as many jumps as you want
-    private int Jumps;//number of jumps the player currently has left.
+    public int Jumps;//number of jumps the player currently has left.
     public bool variableJump = false;//can the player vary the height of jumps by releasing the jump button?
     [Range(1, 2)]
     public float fallingMult = 1;//how much faster you fall after reaching peak height or releasing jump button (if variableJump)
@@ -25,7 +25,6 @@ public class MovementController : MonoBehaviour {
     private bool bGrounded;//grounded?
     private float GroundRadius = 0.2f;//radius for which it will become grounded
     public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
-    [SerializeField] private LayerMask WhatHurts;
     float initGrav;//initial gravity has to be stored somewhere
     public bool hashealth = false;
     public bool haslives = false;
@@ -162,7 +161,7 @@ public class MovementController : MonoBehaviour {
                 {
                     currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
                 }
-                if (health <= 0 || !hashealth)
+                if (currentHealth <= 0 || !hashealth)
                 {
                     currentLives--;
                     currentHealth = health;
