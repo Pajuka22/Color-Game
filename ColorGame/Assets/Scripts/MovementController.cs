@@ -36,8 +36,8 @@ public class MovementController : MonoBehaviour {
     public int lives = 3;
     public Transform Checkpoint;
     public float invincibilityTime = 1;
-    int currentHealth;
-    int currentLives;
+    public int currentHealth;
+    public int currentLives;
     float invincibility = 0;
     
     GameObject Obj;
@@ -203,7 +203,7 @@ public class MovementController : MonoBehaviour {
                 {
                     currentHealth -= col.gameObject.GetComponent<MHurts>().Damage;
                 }
-                if (health <= 0 || !hashealth)
+                if (currentHealth <= 0 || !hashealth)
                 {
                     currentLives--;
                     currentHealth = health;
