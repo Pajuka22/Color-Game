@@ -37,6 +37,7 @@ public class MWalker : MEnemy
         linerenderer = GetComponent<LineRenderer>();
         deltaTheta = (2f * Mathf.PI) / vertices;
         Anim = GetComponent<Animator>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame

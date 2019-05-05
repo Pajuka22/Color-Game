@@ -19,13 +19,18 @@ public class ColorStorage : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (MonoLib.Has<IAmColor>(collision.gameObject))// && Eff != null)
+        if (MonoLib.Has<IAmColor>(collision.gameObject) && collision.gameObject.GetComponent<IAmColor>().enabled)
         {
             if(Eff != null)
             {
                 Eff.IncreaseColor((int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI, 1);
             }
             Current[(int)collision.gameObject.GetComponent<IAmColor>().WhatColorAmI] = true;
+            if (MonoLib.Has<MovementController>(this.gameObject))
+            {
+                GetComponent<MovementController>().Checkpoint = collision.gameObject.transform;
+            }
+            collision.gameObject.GetComponent<IAmColor>().enabled = false;
         }
     }
 }
