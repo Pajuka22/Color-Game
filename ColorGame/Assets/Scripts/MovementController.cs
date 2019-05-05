@@ -4,15 +4,24 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovementController : MonoBehaviour {
-
+    //walking
     public Rigidbody2D RB;
     public float walkSpeed = 10;
     [Range(1, 10)]
     public float acceleration = 1;//how quickly you accelerate when changing direction or starting movement
+    //grounding and jumping
     [SerializeField] private LayerMask WhatIsGround;
     public List<float> jumpHeight = new List<float>();//list of heights of jumps. Allows for as many jumps as you want
-    public int Jumps;//number of jumps the player currently has left.
+    public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     public bool variableJump = false;//can the player vary the height of jumps by releasing the jump button?
+    private bool bGrounded;//grounded?
+    private Transform Ground;//
+    private Transform Ceiling;//Ground and ceiling checks
+    private float GroundRadius = 0.2f;//radius for which it will become grounded
+    int Jumps;//number of jumps the player currently has left.
+    //water and gravity
+    bool inWater = false;
+    float initGrav;//initial gravity has to be stored somewhere
     [Range(1, 2)]
     public float fallingMult = 1;//how much faster you fall after reaching peak height or releasing jump button (if variableJump)
     [Range(0, 1)]
@@ -20,21 +29,17 @@ public class MovementController : MonoBehaviour {
     public float waterGravMult = 0.5f;
     public float waterFriction = 0.5f;
     [SerializeField] private LayerMask WhatIsWater;
-    private Transform Ground;//
-    private Transform Ceiling;//Ground and ceiling checks
-    private bool bGrounded;//grounded?
-    private float GroundRadius = 0.2f;//radius for which it will become grounded
-    public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
-    float initGrav;//initial gravity has to be stored somewhere
+    //health stuff
     public bool hashealth = false;
     public bool haslives = false;
     public int health = 1;
     public int lives = 3;
+    public Transform Checkpoint;
     public float invincibilityTime = 1;
-    public float invincibility = 0;
-    bool inWater = false;
-    public int currentHealth;
-    public int currentLives;
+    int currentHealth;
+    int currentLives;
+    float invincibility = 0;
+    
     GameObject Obj;
 
     // Use this for initialization
@@ -47,6 +52,7 @@ public class MovementController : MonoBehaviour {
         Jumps = jumpSpeed.Count;
         currentHealth = health;
         currentLives = lives;
+        Checkpoint.position = this.transform.position;
         //just storing initial values
 
     }
@@ -215,11 +221,12 @@ public class MovementController : MonoBehaviour {
     }
     private void die()
     {
-        //input dying code here.
+        transform.position = Checkpoint.transform.position;
+        currentHealth = health;
+        currentLives = lives;
     }
     public static bool Has<T>(GameObject GO)
     {
         return GO.GetComponent<T>() != null;
     }
 }
-
