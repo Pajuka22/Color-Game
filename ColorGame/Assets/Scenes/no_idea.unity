@@ -458,7 +458,8 @@ GameObject:
   - component: {fileID: 348533258}
   - component: {fileID: 348533260}
   - component: {fileID: 348533259}
-  m_Layer: 5
+  - component: {fileID: 348533261}
+  m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,16 +475,16 @@ RectTransform:
   m_GameObject: {fileID: 348533257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.895, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 2078405610}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -435, y: 190}
+  m_AnchoredPosition: {x: -479.84, y: 190}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &348533259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +505,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 212d16f9448ed1a449adaf1ba9908d6d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20eed6e158877a949b0505b2c1bf269a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -521,6 +522,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348533257}
   m_CullTransparentMesh: 0
+--- !u!114 &348533261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348533257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe4e09613062a0e46ac68a8e1ce03233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1151905387}
 --- !u!1001 &368157284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1569,7 +1583,7 @@ GameObject:
   - component: {fileID: 825160013}
   - component: {fileID: 825160015}
   - component: {fileID: 825160014}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,7 +1598,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825160012}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 2078405610}
@@ -1716,6 +1730,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.67}
   m_EdgeRadius: 0
+--- !u!114 &1151905387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114115393014132784, guid: f27ccc4994aea384f94f0ff893209ebf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2022729665}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a377941cd48cb4a92a386983af917a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1241049391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1837,7 @@ GameObject:
   - component: {fileID: 1331232898}
   - component: {fileID: 1331232900}
   - component: {fileID: 1331232899}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1826,7 +1852,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331232897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 2078405610}
@@ -2475,6 +2501,11 @@ PrefabInstance:
       propertyPath: lives
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114115393014132784, guid: f27ccc4994aea384f94f0ff893209ebf,
+        type: 3}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4157686041658388, guid: f27ccc4994aea384f94f0ff893209ebf, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.626
@@ -2642,7 +2673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2078405610}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
