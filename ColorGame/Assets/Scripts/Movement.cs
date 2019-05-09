@@ -14,23 +14,29 @@ public class Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        speed = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonDown("Jump"))
+        if (!MenuController.IsPaused)
         {
-            jump = true;
-        }
-        if (Input.GetButtonDown("Crouch"))
-        {
-            crouch = true;
-        }
-        if (Input.GetButtonUp("Crouch"))
-        {
-            crouch = false;
+            speed = Input.GetAxisRaw("Horizontal");
+            if (Input.GetButtonDown("Jump"))
+            {
+                jump = true;
+            }
+            if (Input.GetButtonDown("Crouch"))
+            {
+                crouch = true;
+            }
+            if (Input.GetButtonUp("Crouch"))
+            {
+                crouch = false;
+            }
         }
 	}
     private void FixedUpdate()
     {
-        controller.Move(speed, jump, crouch);
-        jump = false; 
+        if (!MenuController.IsPaused)
+        {
+            controller.Move(speed, jump, crouch);
+            jump = false;
+        }
     }
 }

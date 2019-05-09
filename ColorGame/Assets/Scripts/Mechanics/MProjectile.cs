@@ -8,6 +8,7 @@ public class MProjectile : MonoBehaviour
     public float bulletspeed = 1;
     private Rigidbody2D RB;
     public GameObject Creator;
+    public float DestroyTime = 3;
 
     void Start()
     {
@@ -16,12 +17,21 @@ public class MProjectile : MonoBehaviour
         direction /= direction.magnitude;
         RB.velocity = direction * bulletspeed; //sets the movement of the projectile
         Physics2D.IgnoreCollision(this.gameObject.GetComponent<Collider2D>(), Creator.GetComponent<Collider2D>());
+        Destroy(this.gameObject, DestroyTime);
     }
     private void Update()
     {
         if (GetComponent<MEnemyHurts>().hasDamaged)
         {
             Destroy(this.gameObject);
+        }
+        if (MenuController.IsPaused)
+        {
+            RB.velocity = new Vector2(0, 0);
+        }
+        else
+        {
+            RB.velocity = direction * bulletspeed;
         }
     }
     private void OnCollisionEnter2D(Collision2D col)

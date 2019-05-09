@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorStorage : MonoBehaviour
 {
-    public bool[] Current;
+    public static bool[] Current;
     public SelectGrayEff Eff;
     // Start is called before the first frame update
     void Start()

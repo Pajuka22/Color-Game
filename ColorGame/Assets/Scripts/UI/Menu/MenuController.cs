@@ -10,6 +10,7 @@ public class MenuController : MonoBehaviour
     public int index = 0;
     public static bool IsPaused = false;
     bool submitted = false;
+    public static bool IsDead = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,9 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (!IsPaused)
+        if (IsPaused)
         {
+            //Time.timeScale = 0;
             if (!submitted)
             {
                 if (Input.GetAxis("Vertical") != 0)
@@ -56,9 +57,8 @@ public class MenuController : MonoBehaviour
             if (Input.GetButtonDown("Submit"))
             {
                 Submit();
+                submitted = true;
                 Buttons[index].Current = ButtonParent.States.Submitted;
-                //Invoke("Submit", Buttons[index].SubmitTime);
-                //submitted = true;
             }
         }
     }

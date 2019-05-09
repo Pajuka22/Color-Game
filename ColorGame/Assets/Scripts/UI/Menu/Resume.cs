@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuitButton : ButtonParent
+public class Resume : ButtonParent
 {
     //public float animTime = 0.5f;
     // Start is called before the first frame update
@@ -15,6 +15,6 @@ public class QuitButton : ButtonParent
     public IEnumerator Quit(float time)
     {
         yield return new WaitForSeconds(time);
-        Application.Quit();
+        MenuController.IsPaused = false;
     }
 }

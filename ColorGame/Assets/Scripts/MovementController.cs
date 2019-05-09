@@ -46,9 +46,9 @@ public class MovementController : MonoBehaviour {
     void Start () {
         jumpSpeed.Clear();
         jumpSpeed.TrimExcess();
+        initGrav = RB.gravityScale;
         setJumpSpeed(0, jumpHeight.Count);
         //fill in jumpspeed list with all the values needed.
-        initGrav = RB.gravityScale;
         Jumps = jumpSpeed.Count;
         currentHealth = health;
         currentLives = lives;
@@ -62,7 +62,7 @@ public class MovementController : MonoBehaviour {
         {
             if (jumpSpeed.Count < i + 1)
             {
-                jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+                jumpSpeed.Add(Mathf.Sqrt(2 * initGrav * jumpHeight[i]));
             }
         }
     }
@@ -131,7 +131,7 @@ public class MovementController : MonoBehaviour {
             }
         }
         //acceleration stuff. Makes sure it stops when done accelerating, and accelerates toward desired speed.
-        if (!bGrounded && (RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
+        if (!bGrounded && RB.velocity.y < 0 )//(RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
         {
             RB.gravityScale = fallingMult * initGrav * (inWater ? waterGravMult : 1);
         }
@@ -184,19 +184,23 @@ public class MovementController : MonoBehaviour {
         if ((WhatIsWater.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer)
         {
             inWater = false;
-        }
+        }//check if it's leaving the water.
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (MonoLib.Has<MEnemy>(col.gameObject) || MonoLib.Has<MProjectile>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
+            //ignore collision physics if it's an enemy.
         }
+        //check if hitting a working damager.
         if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false)
             && invincibility <= 0)
         {
+            //take the damage, check if losing lives, start invincibility frames, etc.
             if ((MonoLib.Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
             {
+                
                 invincibility = invincibilityTime;
                 RB.AddForce(new Vector2(0, 500));
                 if (hashealth)
@@ -208,7 +212,7 @@ public class MovementController : MonoBehaviour {
                     currentLives--;
                     currentHealth = health;
                 }
-                if (currentLives == 0)
+                if (currentLives == 0 && (!hashealth || currentHealth <= 0))
                 {
                     die();
                 }
@@ -221,12 +225,20 @@ public class MovementController : MonoBehaviour {
     }
     private void die()
     {
-        transform.position = Checkpoint.transform.position;
-        currentHealth = health;
-        currentLives = lives;
+        //return to checkpoint, reset health and lives.
+        MenuController.IsDead = true;
+        MenuController.IsPaused = true;
     }
     public static bool Has<T>(GameObject GO)
     {
         return GO.GetComponent<T>() != null;
+    }
+    public void Respawn()
+    {
+        transform.position = Checkpoint.transform.position;
+        currentHealth = health;
+        currentLives = lives;
+        MenuController.IsDead = false;
+        MenuController.IsPaused = false;
     }
 }
