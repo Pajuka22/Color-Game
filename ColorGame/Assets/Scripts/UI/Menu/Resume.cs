@@ -10,7 +10,6 @@ public class Resume : ButtonParent
     {
         base.Select();
         StartCoroutine(Quit(SubmitTime));
-        Application.Quit();
     }
     public IEnumerator Quit(float time)
     {

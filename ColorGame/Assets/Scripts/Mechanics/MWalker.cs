@@ -28,6 +28,8 @@ public class MWalker : MEnemy
     private LineRenderer linerenderer;
     private Animator Anim;
     bool touchGround = false;
+    Vector2 cacheVel;
+    bool cachePause;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,10 @@ public class MWalker : MEnemy
     {
         if (!MenuController.IsPaused)
         {
+            if (cachePause)
+            {
+                RB.velocity = cacheVel;
+            }
             myTransform = this.transform;
             Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
             grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
@@ -133,6 +139,13 @@ public class MWalker : MEnemy
                     }
                     break;
             }
+            cacheVel = RB.velocity;
+            cachePause = false;
+        }
+        else
+        {
+            RB.velocity = new Vector2(0, 0);
+            cachePause = true;
         }
     }
     public override void ActAwake()

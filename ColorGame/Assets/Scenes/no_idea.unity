@@ -536,8 +536,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 546803150}
-  - {fileID: 2078405610}
   - {fileID: 835326091}
+  - {fileID: 2078405610}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2092,7 +2092,7 @@ RectTransform:
   - {fileID: 136195239}
   - {fileID: 1198342358}
   m_Father: {fileID: 264564830}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Buttons:
-  - {fileID: 0}
+  - {fileID: 136195240}
   - {fileID: 1198342359}
   index: 0
 --- !u!1 &1069359306
@@ -3252,7 +3252,7 @@ PrefabInstance:
     - target: {fileID: 8496772976576295255, guid: f27ccc4994aea384f94f0ff893209ebf,
         type: 3}
       propertyPath: excludeLayers.m_Bits
-      value: 0
+      value: 4096
       objectReference: {fileID: 0}
     - target: {fileID: 1358165726238153871, guid: f27ccc4994aea384f94f0ff893209ebf,
         type: 3}
@@ -3301,7 +3301,7 @@ GameObject:
   - component: {fileID: 2039047097}
   - component: {fileID: 2039047096}
   - component: {fileID: 2039047095}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Front Sprite - Red (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3591,7 +3591,7 @@ RectTransform:
   - {fileID: 348533258}
   - {fileID: 825160013}
   m_Father: {fileID: 264564830}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

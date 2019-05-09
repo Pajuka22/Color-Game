@@ -8,22 +8,21 @@ public class ContinueButton : ButtonParent
     MovementController movement;
     void Start()
     {
+        anim = GetComponent<Animator>();
         movement = GameObject.Find("Player").GetComponent<MovementController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public override void Select()
     {
+        base.Select();
+        Current = ButtonParent.States.Submitted;
+        Debug.Log("Submitted");
         StartCoroutine(Continue(SubmitTime));
-        movement.Respawn();
+        anim.SetInteger("State", 2);
     }
     public IEnumerator Continue(float time)
     {
         yield return new WaitForSeconds(time);
         movement.Respawn();
+        MenuController.IsPaused = MenuController.IsDead = false;
     }
 }

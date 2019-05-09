@@ -6,6 +6,7 @@ public class MenuActivator : MonoBehaviour
 {
     public GameObject Paused;
     public GameObject Dead;
+    bool cachePause;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +25,17 @@ public class MenuActivator : MonoBehaviour
             if (MenuController.IsDead)
             {
                 Dead.SetActive(true);
+                if (MonoLib.Has<MenuController>(Dead) && !cachePause)
+                {
+                    Dead.GetComponent<MenuController>().Buttons[Dead.GetComponent<MenuController>().index].Current = ButtonParent.States.Selected;
+                }
             }
             else
             {
+                if (MonoLib.Has<MenuController>(Paused) && !cachePause)
+                {
+                    Paused.GetComponent<MenuController>().Buttons[Paused.GetComponent<MenuController>().index].Current = ButtonParent.States.Selected;
+                }
                 Paused.SetActive(true);
             }
         }
@@ -35,5 +44,6 @@ public class MenuActivator : MonoBehaviour
             Dead.SetActive(false);
             Paused.SetActive(false);
         }
+        cachePause = MenuController.IsPaused;
     }
 }
