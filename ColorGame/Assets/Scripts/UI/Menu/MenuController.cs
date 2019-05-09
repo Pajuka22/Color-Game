@@ -5,25 +5,22 @@ using UnityEngine;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] List<ButtonParent> Buttons;
+    [SerializeField] public List<ButtonParent> Buttons;
     bool keydown = false;
     public int index = 0;
     public static bool IsPaused = false;
-    bool submitted = false;
+    //bool submitted = false;
+    public static bool IsDead = false;
     // Start is called before the first frame update
     void Start()
     {
         Buttons[index].Current = ButtonParent.States.Selected;
     }
-
     // Update is called once per frame
     void Update()
     {
-        
-        if (!IsPaused)
+        if (IsPaused)
         {
-            if (!submitted)
-            {
                 if (Input.GetAxis("Vertical") != 0)
                 {
                     if (!keydown)
@@ -52,18 +49,17 @@ public class MenuController : MonoBehaviour
                 {
                     keydown = false;
                 }
-            }
             if (Input.GetButtonDown("Submit"))
             {
-                Submit();
                 Buttons[index].Current = ButtonParent.States.Submitted;
-                //Invoke("Submit", Buttons[index].SubmitTime);
-                //submitted = true;
+                Submit();
+                
             }
         }
     }
     void Submit()
     {
+        Buttons[index].Current = ButtonParent.States.Submitted;
         Buttons[index].Select();
     }
 }
