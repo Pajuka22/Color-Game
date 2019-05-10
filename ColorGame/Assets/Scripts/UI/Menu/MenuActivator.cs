@@ -16,6 +16,8 @@ public class MenuActivator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(MenuController.IsPaused);
+        Debug.Log(MenuController.IsDead);
         if (Input.GetKeyDown("escape") && !MenuController.IsPaused)
         {
             MenuController.IsPaused = true;

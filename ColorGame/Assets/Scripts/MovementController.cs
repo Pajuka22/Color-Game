@@ -39,6 +39,8 @@ public class MovementController : MonoBehaviour {
     public int currentHealth;
     public int currentLives;
     float invincibility = 0;
+    Vector2 cacheVel;
+    bool cachePause;
     
     GameObject Obj;
 
@@ -76,33 +78,49 @@ public class MovementController : MonoBehaviour {
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if(MonoLib.sign(RB.velocity.x) != MonoLib.sign(Obj.transform.right.x))
+        if (!MenuController.IsPaused)
         {
-            if(RB.velocity.x != 0)
+            if (cachePause)
             {
-                Obj.transform.Rotate(0, 180, 0);
+                RB.velocity = cacheVel;
+                RB.gravityScale = initGrav;
             }
-        }
-        bGrounded = false;
-        if(Jumps == jumpSpeed.Count)
-        {
-            Jumps--;
-        }
-        //basically says that number of jumps is jumpSpeed.Count - 1 so that if the player runs off a platform, they don't get the grounded jump
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(Ground.position, GroundRadius, WhatIsGround);
-        for(int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i] != gameObject)
+            if (MonoLib.sign(RB.velocity.x) != MonoLib.sign(Obj.transform.right.x))
             {
-                bGrounded = true;
-                Jumps = jumpSpeed.Count;
+                if (RB.velocity.x != 0)
+                {
+                    Obj.transform.Rotate(0, 180, 0);
+                }
             }
+            bGrounded = false;
+            if (Jumps == jumpSpeed.Count)
+            {
+                Jumps--;
+            }
+            //basically says that number of jumps is jumpSpeed.Count - 1 so that if the player runs off a platform, they don't get the grounded jump
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(Ground.position, GroundRadius, WhatIsGround);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i] != gameObject)
+                {
+                    bGrounded = true;
+                    Jumps = jumpSpeed.Count;
+                }
+            }
+            if (invincibility > 0)
+            {
+                invincibility -= Time.fixedDeltaTime;
+            }
+            //if grounded, get all jumps back
+            cachePause = false;
+            cacheVel = RB.velocity;
         }
-        if (invincibility > 0)
+        else
         {
-            invincibility -= Time.fixedDeltaTime;
+            cachePause = true;
+            RB.velocity = new Vector2(0, 0);
+            RB.gravityScale = 0;
         }
-        //if grounded, get all jumps back
     }
     public void Move(float speed, bool jump, bool crouch)
     {
@@ -212,7 +230,7 @@ public class MovementController : MonoBehaviour {
                     currentLives--;
                     currentHealth = health;
                 }
-                if (currentLives == 0 && (!hashealth || currentHealth <= 0))
+                if (currentLives == 0)
                 {
                     die();
                 }

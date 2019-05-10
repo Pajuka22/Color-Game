@@ -23,6 +23,7 @@ public class ContinueButton : ButtonParent
     {
         yield return new WaitForSeconds(time);
         movement.Respawn();
-        MenuController.IsPaused = MenuController.IsDead = false;
+        MenuController.IsPaused = false;
+        MenuController.IsDead = false;
     }
 }
