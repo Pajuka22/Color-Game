@@ -14,10 +14,7 @@ public class ContinueButton : ButtonParent
     public override void Select()
     {
         base.Select();
-        Current = ButtonParent.States.Submitted;
-        Debug.Log("Submitted");
         StartCoroutine(Continue(SubmitTime));
-        anim.SetInteger("State", 2);
     }
     public IEnumerator Continue(float time)
     {
@@ -25,5 +22,6 @@ public class ContinueButton : ButtonParent
         movement.Respawn();
         MenuController.IsPaused = false;
         MenuController.IsDead = false;
+        //respawn after time.
     }
 }

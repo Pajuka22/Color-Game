@@ -195,7 +195,7 @@ public class MovementController : MonoBehaviour {
                     die();
                 }
             }
-        }
+        }//damage stuff except with triggers
     }
     private void OnTriggerExit2D(Collider2D col)
     {
@@ -243,7 +243,7 @@ public class MovementController : MonoBehaviour {
     }
     private void die()
     {
-        //return to checkpoint, reset health and lives.
+        //the game is paused and the player is dead.
         MenuController.IsDead = true;
         MenuController.IsPaused = true;
     }
@@ -258,5 +258,6 @@ public class MovementController : MonoBehaviour {
         currentLives = lives;
         MenuController.IsDead = false;
         MenuController.IsPaused = false;
+        //go to checkpoint, reset health and lives, no longer paused nor dead.
     }
 }

@@ -18,6 +18,7 @@ public class ButtonParent : MonoBehaviour
     void Update()
     {
         anim.SetInteger("State", (int)Current);
+        //keep the animator up to date on what we're doing
     }
     public virtual void Select()
     {

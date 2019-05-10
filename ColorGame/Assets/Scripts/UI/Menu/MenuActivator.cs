@@ -16,12 +16,12 @@ public class MenuActivator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(MenuController.IsPaused);
-        Debug.Log(MenuController.IsDead);
+        //if you press escape, pause the game.
         if (Input.GetKeyDown("escape") && !MenuController.IsPaused)
         {
             MenuController.IsPaused = true;
         }
+        //if paused, then if it's dead open the death menu, otherwise open the pause menu, otherwise deactivate both menus.
         if (MenuController.IsPaused)
         {
             if (MenuController.IsDead)

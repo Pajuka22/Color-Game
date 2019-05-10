@@ -7,8 +7,11 @@ public class MSpike : MHurts
 
     // Start is called before the first frame update
     void Start()
-    { 
-
+    {
+        if (WOKE)
+        {
+            Activate();
+        }
     }
 
     // Update is called once per frame
