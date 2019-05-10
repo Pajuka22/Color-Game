@@ -19,6 +19,8 @@ public class MFlier : MEnemy
     bool tookDamage;
     GameObject newProj;
     float curHealth;
+    Vector2 cacheVel;
+    bool cachePause;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,34 +32,48 @@ public class MFlier : MEnemy
     // Update is called once per frame
     void Update()
     {
-        switch (currentState)
+        if (!MenuController.IsPaused)
         {
-            case States.NotWorking:
-                {
+            if (cachePause)
+            {
+                RB.velocity = cacheVel;
+            }
+            switch (currentState)
+            {
+                case States.NotWorking:
+                    {
 
-                }
-                break;
-            case States.Moving:
-                {
-                    if(MonoLib.sign(RB.velocity.x) != MonoLib.sign(this.transform.right.x))
-                    {
-                        transform.Rotate(0, 180, 0);
                     }
-                    if (checkRight())
+                    break;
+                case States.Moving:
                     {
-                        RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
+                        if (MonoLib.sign(RB.velocity.x) != MonoLib.sign(this.transform.right.x))
+                        {
+                            transform.Rotate(0, 180, 0);
+                        }
+                        if (checkRight())
+                        {
+                            RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
+                        }
+                        if (checkUp())
+                        {
+                            RB.velocity = new Vector2(RB.velocity.x, -RB.velocity.y);
+                        }
                     }
-                    if (checkUp())
+                    break;
+                case States.Shooting:
                     {
-                        RB.velocity = new Vector2(RB.velocity.x, -RB.velocity.y);
+
                     }
-                }
-                break;
-            case States.Shooting:
-                {
-                    
-                }
-                break;
+                    break;
+            }
+            cacheVel = RB.velocity;
+            cachePause = false;
+        }
+        else
+        {
+            cachePause = true;
+            RB.velocity = new Vector2(0, 0);
         }
     }
     void Move()

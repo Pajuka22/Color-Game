@@ -20,24 +20,26 @@ public class MProjCtrl : MParent
     // Update is called once per frame
     void Update()
     {
-        //finds the direction that the player faced most recently
-        direction = this.transform.right;
-        //determines if the projectile can be created; if so, one is created
-        if (Input.GetButtonDown("Fire1") && createprojectile && WOKE)
+        if (!MenuController.IsPaused)
         {
-            createprojectile = false; //prevents projectile spam
-            GameObject newProjectile = Instantiate(Projectile) as GameObject;
-            for (int i = 0; i < GetComponents<Collider2D>().Length; i++)
+            //finds the direction that the player faced most recently
+            direction = this.transform.right;
+            //determines if the projectile can be created; if so, one is created
+            if (Input.GetButtonDown("Fire1") && createprojectile && WOKE)
             {
-                Physics2D.IgnoreCollision(this.gameObject.GetComponents<Collider2D>()[i], newProjectile.GetComponent<Collider2D>());
+                createprojectile = false; //prevents projectile spam
+                GameObject newProjectile = Instantiate(Projectile) as GameObject;
+                for (int i = 0; i < GetComponents<Collider2D>().Length; i++)
+                {
+                    Physics2D.IgnoreCollision(this.gameObject.GetComponents<Collider2D>()[i], newProjectile.GetComponent<Collider2D>());
+                }
+                newProjectile.transform.position = new Vector2(spawnLoc.transform.position.x, spawnLoc.transform.position.y);
+                newProjectile.GetComponent<MProjectile>().direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnLoc.transform.position; //tells the projectile the direction to go in
+                newProjectile.GetComponent<MProjectile>().Creator = this.gameObject;
+                Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
             }
-            newProjectile.transform.position = new Vector2(spawnLoc.transform.position.x, spawnLoc.transform.position.y);
-            newProjectile.GetComponent<MProjectile>().direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnLoc.transform.position; //tells the projectile the direction to go in
-            newProjectile.GetComponent<MProjectile>().Creator = this.gameObject;
-            Invoke("reload", bullettime); //sets up for projectiles to be re-enabled
         }
     }
-
     void reload()
     {
         createprojectile = true;

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class QuitButton : ButtonParent
 {
-    public float animTime = 0.5f;
+    //public float animTime = 0.5f;
     // Start is called before the first frame update
     public override void Select()
     {
         base.Select();
-        StartCoroutine(Quit(animTime));
+        StartCoroutine(Quit(SubmitTime));
         Application.Quit();
     }
     public IEnumerator Quit(float time)

@@ -13,7 +13,6 @@ public class SelectGrayEff : MonoBehaviour
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         Graphics.Blit(src, dest, EffectMaterial);
-
         // exclude layers
         Camera cam = null;
         if (excludeLayers.value != 0) cam = GetTmpCam();
@@ -102,5 +101,9 @@ public class SelectGrayEff : MonoBehaviour
             increasing = false;
             interval = 0;
         }
+    }
+    void OnGUI()
+    {
+        GUI.depth = 0;
     }
 }

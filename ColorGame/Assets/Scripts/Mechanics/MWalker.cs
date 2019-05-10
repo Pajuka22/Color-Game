@@ -28,6 +28,8 @@ public class MWalker : MEnemy
     private LineRenderer linerenderer;
     private Animator Anim;
     bool touchGround = false;
+    Vector2 cacheVel;
+    bool cachePause;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,93 +45,107 @@ public class MWalker : MEnemy
     // Update is called once per frame
     void Update()
     {
-        myTransform = this.transform;
-        Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
-        grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
-
-        bool blocked = Physics2D.Linecast(linecastPos + new Vector2(0, 0.25f), linecastPos + new Vector2(0.5f * MonoLib.sign(RB.velocity.x), 0.25f), WhatIsGround);
-
-        Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
-        if(myTransform.right != new Vector3(MonoLib.sign(RB.velocity.x), 0f , 0f) && RB.velocity.magnitude != 0)
+        if (!MenuController.IsPaused)
         {
-            transform.Rotate(new Vector3(0, 180, 0));
-        }
-        switch (currentState)
-        {
-            case States.Walking:
-                {
-                    if (grounded && !blocked)
+            if (cachePause)
+            {
+                RB.velocity = cacheVel;
+            }
+            myTransform = this.transform;
+            Vector2 linecastPos = (myTransform.position + myTransform.right * width - myTransform.up * height);
+            grounded = Physics2D.Linecast(linecastPos, linecastPos + new Vector2(0f, -0.5f), WhatIsGround);
+
+            bool blocked = Physics2D.Linecast(linecastPos + new Vector2(0, 0.25f), linecastPos + new Vector2(0.5f * MonoLib.sign(RB.velocity.x), 0.25f), WhatIsGround);
+
+            Debug.DrawLine(linecastPos, linecastPos + new Vector2(0f, -0.5f));
+            if (myTransform.right != new Vector3(MonoLib.sign(RB.velocity.x), 0f, 0f) && RB.velocity.magnitude != 0)
+            {
+                transform.Rotate(new Vector3(0, 180, 0));
+            }
+            switch (currentState)
+            {
+                case States.Walking:
                     {
-                        RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, RB.velocity.y) : new Vector2(-speed, RB.velocity.y);
+                        if (grounded && !blocked)
+                        {
+                            RB.velocity = RB.velocity.x >= 0 ? new Vector2(speed, RB.velocity.y) : new Vector2(-speed, RB.velocity.y);
+                        }
+                        else
+                        {
+                            RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
+                            transform.Rotate(new Vector3(0, 180, 0));
+                        }
+                        if ((this.transform.position - player.transform.position).magnitude < chaseRad)
+                        {
+                            currentState = States.Transforming;
+                        }
                     }
-                    else
+                    break;
+                case States.Transforming:
                     {
-                        RB.velocity = new Vector2(-RB.velocity.x, RB.velocity.y);
-                        transform.Rotate(new Vector3(0, 180, 0));
+                        StartCoroutine(Transform(1));
                     }
-                    if((this.transform.position - player.transform.position).magnitude < chaseRad)
+                    break;
+                case States.Running:
                     {
-                        currentState = States.Transforming;
-                    }
-                }
-                break;
-            case States.Transforming:
-                {
-                    StartCoroutine(Transform(1));
-                }
-                break;
-            case States.Running:
-                {
-                    RB.velocity = new Vector2(chaseSpeed * MonoLib.sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
-                    if (grounded)
-                    {
-                        canJump = true;
-                    }
-                    else
-                    {
-                        if (canJump)
+                        RB.velocity = new Vector2(chaseSpeed * MonoLib.sign(player.transform.position.x - this.transform.position.x), RB.velocity.y);
+                        if (grounded)
+                        {
+                            canJump = true;
+                        }
+                        else
+                        {
+                            if (canJump)
+                            {
+                                RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
+                                canJump = false;
+                            }
+                        }
+                        if (blocked && canJump)
                         {
                             RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
                             canJump = false;
                         }
-                    }
-                    if(blocked && canJump)
-                    {
-                        RB.velocity = new Vector2(RB.velocity.x, jumpSpeed);
-                        canJump = false;
-                    }
-                    if ((player.transform.position - this.transform.position).magnitude > chaseRad)
-                    {
-                        currentState = States.Walking;
-                    }
-                    if ((player.transform.position - this.transform.position).magnitude < YEETrad)
-                    {
-                        currentState = States.Attacking;
-                    }
-                }
-                break;
-            case States.Attacking:
-                {
-                    if (checkGround() || grounded)
-                    {
-                        if (yeeted)
+                        if ((player.transform.position - this.transform.position).magnitude > chaseRad)
                         {
-                            currentState = States.Running;
-                            yeeted = false;
+                            currentState = States.Walking;
                         }
-                        else
+                        if ((player.transform.position - this.transform.position).magnitude < YEETrad)
                         {
-                            RB.AddForce((player.transform.position - this.transform.position) / (player.transform.position - this.transform.position).magnitude * YEETFORCE);
-                            yeeted = true;
+                            currentState = States.Attacking;
                         }
                     }
-                }
-                break;
-            default:
-                {
-                    currentState = States.NotWorking;
-                }
-                break;
+                    break;
+                case States.Attacking:
+                    {
+                        if (checkGround() || grounded)
+                        {
+                            if (yeeted)
+                            {
+                                currentState = States.Running;
+                                yeeted = false;
+                            }
+                            else
+                            {
+                                RB.AddForce((player.transform.position - this.transform.position) / (player.transform.position - this.transform.position).magnitude * YEETFORCE);
+                                yeeted = true;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        currentState = States.NotWorking;
+                    }
+                    break;
+            }
+            cacheVel = RB.velocity;
+            cachePause = false;
+        }
+        else
+        {
+            RB.velocity = new Vector2(0, 0);
+            cachePause = true;
         }
     }
     public override void ActAwake()

@@ -39,6 +39,8 @@ public class MovementController : MonoBehaviour {
     public int currentHealth;
     public int currentLives;
     float invincibility = 0;
+    Vector2 cacheVel;
+    bool cachePause;
     
     GameObject Obj;
 
@@ -46,9 +48,9 @@ public class MovementController : MonoBehaviour {
     void Start () {
         jumpSpeed.Clear();
         jumpSpeed.TrimExcess();
+        initGrav = RB.gravityScale;
         setJumpSpeed(0, jumpHeight.Count);
         //fill in jumpspeed list with all the values needed.
-        initGrav = RB.gravityScale;
         Jumps = jumpSpeed.Count;
         currentHealth = health;
         currentLives = lives;
@@ -62,7 +64,7 @@ public class MovementController : MonoBehaviour {
         {
             if (jumpSpeed.Count < i + 1)
             {
-                jumpSpeed.Add(Mathf.Sqrt(2 * RB.gravityScale * jumpHeight[i]));
+                jumpSpeed.Add(Mathf.Sqrt(2 * initGrav * jumpHeight[i]));
             }
         }
     }
@@ -76,33 +78,49 @@ public class MovementController : MonoBehaviour {
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if(MonoLib.sign(RB.velocity.x) != MonoLib.sign(Obj.transform.right.x))
+        if (!MenuController.IsPaused)
         {
-            if(RB.velocity.x != 0)
+            if (cachePause)
             {
-                Obj.transform.Rotate(0, 180, 0);
+                RB.velocity = cacheVel;
+                RB.gravityScale = initGrav;
             }
-        }
-        bGrounded = false;
-        if(Jumps == jumpSpeed.Count)
-        {
-            Jumps--;
-        }
-        //basically says that number of jumps is jumpSpeed.Count - 1 so that if the player runs off a platform, they don't get the grounded jump
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(Ground.position, GroundRadius, WhatIsGround);
-        for(int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i] != gameObject)
+            if (MonoLib.sign(RB.velocity.x) != MonoLib.sign(Obj.transform.right.x))
             {
-                bGrounded = true;
-                Jumps = jumpSpeed.Count;
+                if (RB.velocity.x != 0)
+                {
+                    Obj.transform.Rotate(0, 180, 0);
+                }
             }
+            bGrounded = false;
+            if (Jumps == jumpSpeed.Count)
+            {
+                Jumps--;
+            }
+            //basically says that number of jumps is jumpSpeed.Count - 1 so that if the player runs off a platform, they don't get the grounded jump
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(Ground.position, GroundRadius, WhatIsGround);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i] != gameObject)
+                {
+                    bGrounded = true;
+                    Jumps = jumpSpeed.Count;
+                }
+            }
+            if (invincibility > 0)
+            {
+                invincibility -= Time.fixedDeltaTime;
+            }
+            //if grounded, get all jumps back
+            cachePause = false;
+            cacheVel = RB.velocity;
         }
-        if (invincibility > 0)
+        else
         {
-            invincibility -= Time.fixedDeltaTime;
+            cachePause = true;
+            RB.velocity = new Vector2(0, 0);
+            RB.gravityScale = 0;
         }
-        //if grounded, get all jumps back
     }
     public void Move(float speed, bool jump, bool crouch)
     {
@@ -131,7 +149,7 @@ public class MovementController : MonoBehaviour {
             }
         }
         //acceleration stuff. Makes sure it stops when done accelerating, and accelerates toward desired speed.
-        if (!bGrounded && (RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
+        if (!bGrounded && RB.velocity.y < 0 )//(RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
         {
             RB.gravityScale = fallingMult * initGrav * (inWater ? waterGravMult : 1);
         }
@@ -177,26 +195,30 @@ public class MovementController : MonoBehaviour {
                     die();
                 }
             }
-        }
+        }//damage stuff except with triggers
     }
     private void OnTriggerExit2D(Collider2D col)
     {
         if ((WhatIsWater.value & 1 << col.gameObject.layer) == 1 << col.gameObject.layer)
         {
             inWater = false;
-        }
+        }//check if it's leaving the water.
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (MonoLib.Has<MEnemy>(col.gameObject) || MonoLib.Has<MProjectile>(col.gameObject))
         {
             Physics2D.IgnoreCollision(col.collider, col.otherCollider);
+            //ignore collision physics if it's an enemy.
         }
+        //check if hitting a working damager.
         if ((MonoLib.Has<MHurts>(col.gameObject) ? col.gameObject.GetComponent<MHurts>().WOKE : false)
             && invincibility <= 0)
         {
+            //take the damage, check if losing lives, start invincibility frames, etc.
             if ((MonoLib.Has<MHurts>(col.gameObject) ? col.collider == col.gameObject.GetComponent<MHurts>().Damagers.Contains(col.collider) : true))
             {
+                
                 invincibility = invincibilityTime;
                 RB.AddForce(new Vector2(0, 500));
                 if (hashealth)
@@ -221,12 +243,21 @@ public class MovementController : MonoBehaviour {
     }
     private void die()
     {
-        transform.position = Checkpoint.transform.position;
-        currentHealth = health;
-        currentLives = lives;
+        //the game is paused and the player is dead.
+        MenuController.IsDead = true;
+        MenuController.IsPaused = true;
     }
     public static bool Has<T>(GameObject GO)
     {
         return GO.GetComponent<T>() != null;
+    }
+    public void Respawn()
+    {
+        transform.position = Checkpoint.transform.position;
+        currentHealth = health;
+        currentLives = lives;
+        MenuController.IsDead = false;
+        MenuController.IsPaused = false;
+        //go to checkpoint, reset health and lives, no longer paused nor dead.
     }
 }
