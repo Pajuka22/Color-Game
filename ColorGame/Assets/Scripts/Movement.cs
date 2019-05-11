@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
-    bool jump = false;
+    float jump;
+    public int jumpBufferFrames = 3;
     bool crouch = false;
     public float speed = 0;
     public MovementController controller;
@@ -19,7 +20,7 @@ public class Movement : MonoBehaviour {
             speed = Input.GetAxisRaw("Horizontal");
             if (Input.GetButtonDown("Jump"))
             {
-                jump = true;
+                jump = jumpBufferFrames;
             }
             if (Input.GetButtonDown("Crouch"))
             {
@@ -35,8 +36,12 @@ public class Movement : MonoBehaviour {
     {
         if (!MenuController.IsPaused)
         {
-            controller.Move(speed, jump, crouch);
-            jump = false;
+            controller.Move(speed, controller.bGrounded && jump > 0, crouch);
+            if (controller.bGrounded && jump > 0)
+            {
+                jump = 0;
+            }
+            jump--;
         }
     }
 }

@@ -14,7 +14,7 @@ public class MovementController : MonoBehaviour {
     public List<float> jumpHeight = new List<float>();//list of heights of jumps. Allows for as many jumps as you want
     public List<float> jumpSpeed = new List<float>();//list of jumpspeeds filled in when the game starts with a program. Guarantees constant jump height
     public bool variableJump = false;//can the player vary the height of jumps by releasing the jump button?
-    private bool bGrounded;//grounded?
+    public bool bGrounded;//grounded?
     private Transform Ground;//
     private Transform Ceiling;//Ground and ceiling checks
     private float GroundRadius = 0.2f;//radius for which it will become grounded
@@ -149,7 +149,7 @@ public class MovementController : MonoBehaviour {
             }
         }
         //acceleration stuff. Makes sure it stops when done accelerating, and accelerates toward desired speed.
-        if (!bGrounded && RB.velocity.y < 0 )//(RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
+        if (!bGrounded && (RB.velocity.y < 0 || (variableJump && !Input.GetButton("Jump"))))
         {
             RB.gravityScale = fallingMult * initGrav * (inWater ? waterGravMult : 1);
         }

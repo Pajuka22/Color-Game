@@ -24,12 +24,13 @@ public class MenuController : MonoBehaviour
                 if (Input.GetAxis("Vertical") != 0)
                 {
                     if (!keydown)
-                    {
+                    {//make sure that the player released it to avoid spam and ugliness.
 
                         if (Input.GetAxis("Vertical") > 0)
                         {
                             index++;
                             Buttons[index - 1].Current = ButtonParent.States.Deselected;
+                        //increase index
                         }
                         else
                         {
@@ -39,6 +40,7 @@ public class MenuController : MonoBehaviour
                             {
                                 index = Buttons.Count - 1;
                             }
+                            //decrease index
                         }
                         index = index % Buttons.Count;
                         Buttons[index].Current = ButtonParent.States.Selected;
