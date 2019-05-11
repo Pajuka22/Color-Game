@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8015de280cd006408618fd6fbc9fe03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpBufferFrames: 3
   speed: 10
   controller: {fileID: 114115393014132784}
 --- !u!114 &114115393014132784
@@ -281,11 +282,12 @@ MonoBehaviour:
   acceleration: 3
   WhatIsGround:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4097
   jumpHeight:
   - 50
-  Jumps: 0
+  jumpSpeed: []
   variableJump: 0
+  bGrounded: 0
   fallingMult: 1.4
   airFriction: 0
   waterGravMult: 0.5
@@ -293,13 +295,12 @@ MonoBehaviour:
   WhatIsWater:
     serializedVersion: 2
     m_Bits: 16
-  jumpSpeed: []
   hashealth: 1
   haslives: 1
   health: 1
   lives: 3
+  Checkpoint: {fileID: 0}
   invincibilityTime: 1
-  invincibility: 0
   currentHealth: 0
   currentLives: 0
 --- !u!114 &7942919768259994761
@@ -314,7 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb964c7a42e2e841b280ac0987590e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Current: 
   Eff: {fileID: 8496772976576295255}
 --- !u!114 &5698223013165057594
 MonoBehaviour:
